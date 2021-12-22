@@ -92,3 +92,15 @@ Upon successfully completing these courses, you will have built a portfolio of d
 * Interactive Visual Analytics and Dashboard
 * Predictive Analysis (Classification)
 * Present Your Data-Driven Insights
+
+
+
+## IBM Digital Badge
+
+![modulo1](https://user-images.githubusercontent.com/71708626/147092847-7c3fc7a7-ba93-4211-b098-3ee6d2c8c4f7.png)
+
+![modulo2](https://user-images.githubusercontent.com/71708626/147092394-304db72c-c909-45f4-8623-aee3dc880682.png)
+
+![modulo3](https://user-images.githubusercontent.com/71708626/147093347-2183909d-e432-4c74-8987-0e8c0f98f533.png)
+
+
