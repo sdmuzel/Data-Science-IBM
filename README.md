@@ -16,79 +16,79 @@ Upon successfully completing these courses, you will have built a portfolio of d
 
 ## **Courses:**
 
-1. What is Data Science?
-Defining Data Science
-What Do Data Scientists Do?
-Big Data and Data Mining
-Deep Learning and Machine Learning
-Data Science in Business
-Careers and Recruiting in Data Science
-The Report Structure
+**1. What is Data Science?**
+* Defining Data Science
+* What Do Data Scientists Do?
+* Big Data and Data Mining
+* Deep Learning and Machine Learning
+* Data Science in Business
+* Careers and Recruiting in Data Science
+* The Report Structure
 
-2. Tools for Data Science
-Data Science Tools - Open Source Tools
-Data Science Tools - Commercial Tools
-Data Science Tools - Cloud Based Tools
-Packages, APIs, Data Sets and Models - Libraries for Data Science
-Packages, APIs, Data Sets and Models - Application Programming Interfaces (API)
-Packages, APIs, Data Sets and Models - Data Sets & Sharing Enterprise Data
-Packages, APIs, Data Sets and Models - Machine Learning Models
-Packages, APIs, Data Sets and Models - The Model Asset Exchange
+**2. Tools for Data Science**
+* Data Science Tools - Open Source Tools
+* Data Science Tools - Commercial Tools
+* Data Science Tools - Cloud Based Tools
+* Packages, APIs, Data Sets and Models - Libraries for Data Science
+* Packages, APIs, Data Sets and Models - Application Programming Interfaces (API)
+* Packages, APIs, Data Sets and Models - Data Sets & Sharing Enterprise Data
+* Packages, APIs, Data Sets and Models - Machine Learning Models
+* Packages, APIs, Data Sets and Models - The Model Asset Exchange
 
-3. Data Science Methodology
-From Problem to Approach and From Requirements to Collection
-From Understanding to Preparation
-From Deployment to Feedback
+**3. Data Science Methodology**
+* From Problem to Approach and From Requirements to Collection
+* From Understanding to Preparation
+* From Deployment to Feedback
 
-4. Python for Data Science, AI & Development
-Python Basics
-Python Data Structures
-Python Programming Fundamentals
-Working with Data in Python
-APIs, and Data Collection
-
-
-5. Python Project for Data Science
-Crowdsourcing Short squeeze Dashboard
+**4. Python for Data Science, AI & Development**
+* Python Basics
+* Python Data Structures
+* Python Programming Fundamentals
+* Working with Data in Python
+* APIs, and Data Collection
 
 
-6. Databases and SQL for Data Science with Python
-Getting Started with SQL
-Introduction to Relational Databases and Tables
-Intermediate SQL
-Accessing Databases using Python
-_Bonus Module_: Advanced SQL for Data Engineer
+**5. Python Project for Data Science**
+* Crowdsourcing Short squeeze Dashboard
 
 
-7. Data Analysis with Python
-Importing Datasets
-Data Wrangling
-Exploratory Data Analysis
-Model Development
-Model Evaluation
+**6. Databases and SQL for Data Science with Python**
+* Getting Started with SQL
+* Introduction to Relational Databases and Tables
+* Intermediate SQL
+* Accessing Databases using Python
+* _Bonus Module_: Advanced SQL for Data Engineer
 
 
-
-8. Data Visualization with Python
-Introduction to Data Visualization Tools
-Basic and Specialized Visualization Tools
-Advanced Visualizations and Geospatial Data
-Creating Dashboards with Plotly and Dash
+**7. Data Analysis with Python**
+* Importing Datasets
+* Data Wrangling
+* Exploratory Data Analysis
+* Model Development
+* Model Evaluation
 
 
 
-9. Machine Learning with Python
-Introduction to Machine Learning
-Regression
-Classification
-Clustering
-Recommender Systems
+**8. Data Visualization with Python**
+* Introduction to Data Visualization Tools
+* Basic and Specialized Visualization Tools
+* Advanced Visualizations and Geospatial Data
+* Creating Dashboards with Plotly and Dash
 
 
 
-10. Applied Data Science Capstone
-Introduction
-Exploratory Data Analysis (EDA)
-Interactive Visual Analytics and Dashboard
-Predictive Analysis (Classification)
-Present Your Data-Driven Insights
+**9. Machine Learning with Python**
+* Introduction to Machine Learning
+* Regression
+* Classification
+* Clustering
+* Recommender Systems
+
+
+
+**10. Applied Data Science Capstone**
+* Introduction
+* Exploratory Data Analysis (EDA)
+* Interactive Visual Analytics and Dashboard
+* Predictive Analysis (Classification)
+* Present Your Data-Driven Insights
