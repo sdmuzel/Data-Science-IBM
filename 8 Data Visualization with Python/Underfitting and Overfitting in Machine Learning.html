@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<!-- saved from url=(0097)https://datascience.foundation/sciencewhitepaper/underfitting-and-overfitting-in-machine-learning -->
+<html lang="en-US" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers no-applicationcache svg inlinesvg smil svgclippaths"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script async="" src="./Underfitting and Overfitting in Machine Learning_files/get_counts"></script><script type="text/javascript" async="" src="./Underfitting and Overfitting in Machine Learning_files/analytics.js.download"></script><script type="text/javascript" async="" src="./Underfitting and Overfitting in Machine Learning_files/recaptcha__en.js.download" crossorigin="anonymous" integrity="sha384-w2lIrXdcsRgXIRsq1Y2C2rGrB0G3iE5CLYGxlFzUAbix3gGjUFYcQavOqddMOp1u"></script>
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="https://datascience.foundation/img/ico/favicon.png?ver=0.1">
+
+        <title>Underfitting and Overfitting in Machine Learning</title>
+            <meta property="og:type" content="article">
+        <meta property="og:image" content="https://datascience.foundation/img/logo_200.png">
+        <meta id="landing_page_title" name="title" content="Underfitting and Overfitting in Machine Learning">
+    <meta id="landing_page_desc" name="description" content="You often encounter that the model perform well on Training dataset but did not performed on unseen or test dataset. Need to know why? Then this is the article you need to look into.">
+    <meta id="landing_page_keywords" name="keywords" content="overfitting, machine learning, model, dataset">
+    <link href="./Underfitting and Overfitting in Machine Learning_files/css" rel="stylesheet" type="text/css">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="csrf-param" content="_frontendCSRF">
+<meta name="csrf-token" content="2G3T_Q5u6zOoRRD24k0d9y-btIGTL0hGG67unzJfxEiNP5WPRSWYRsoVcZG9ey2kbvL3xfJLJB5v55fLSyuQCg==">
+    
+    <meta id="og_title" property="og:title" content="Underfitting and Overfitting in Machine Learning">
+<meta id="og_type" property="og:type" content="image">
+<meta id="og_url" property="og:url" content="https://datascience.foundation/sciencewhitepaper/underfitting-and-overfitting-in-machine-learning">
+<meta id="og_image" property="og:image" content="https://datascience.foundation/img/logo_200.png">
+<meta id="og_description" property="og:description" content="Machine learning developers often encounter models that perform well on a data set, but dont live up to expectations when used on unseen or test data. This problem is called Overfitting. If you would like to learn more about Overfitting and how to avoid it, read on.">
+<link href="./Underfitting and Overfitting in Machine Learning_files/bootstrap.css" rel="stylesheet">
+<link href="./Underfitting and Overfitting in Machine Learning_files/jquery.mCustomScrollbar.min.css" rel="stylesheet">
+<link href="./Underfitting and Overfitting in Machine Learning_files/app-asset-minified-css.min.css" rel="stylesheet">
+<link href="./Underfitting and Overfitting in Machine Learning_files/blue.min.css" rel="stylesheet">
+<link href="./Underfitting and Overfitting in Machine Learning_files/jquery.fancybox.min.css" rel="stylesheet">
+<link href="./Underfitting and Overfitting in Machine Learning_files/custom.min.css" rel="stylesheet">            <!-- <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://datascience.foundation/js/analytics.js','ga');
+
+            ga('create', 'UA-74400750-1', 'auto');
+            ga('send', 'pageview');
+
+            // https://www.google-analytics.com/analytics.js
+        </script> -->
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+
+        <script async="" src="./Underfitting and Overfitting in Machine Learning_files/js"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-74400750-1');
+        </script>
+        <script>
+        var trackOutboundLink = function(url) {
+           ga('send', 'event', 'outbound', 'click', url, {
+             'transport': 'beacon',
+             'hitCallback': function(){document.location = url;}
+           });
+        }
+        </script>
+    <script src="./Underfitting and Overfitting in Machine Learning_files/jquery.mousewheel.min.js.download"></script><style>.latest-datatalk:before{background:  url(https://datascience.foundation/img/section-bg.jpg)}</style></head>
+
+<body class="body_common_class body-whitepaper-view" data-new-gr-c-s-check-loaded="14.1043.0" data-gr-ext-installed="" style="overflow-y: auto; position: initial;">
+    <script>
+        IS_MOBILE = '0';
+        SITE_URL = 'https://datascience.foundation/';
+        isGuest = '1';
+        CURRENT_SLUG = 'sciencewhitepaper';
+    </script>
+    <input type="hidden" id="SITE_URL_LINK" value="https://datascience.foundation/">
+    <input type="hidden" id="is_guest" value="true">
+
+            
+        	<script src="./Underfitting and Overfitting in Machine Learning_files/jquery-latest-1.11.min.js.download" type="text/javascript"></script>
+<!-- <script type="text/javascript" src="//platform-api.sharethis.com/js/sharethis.js#property=598b1f201af054001146972f&product=inline-share-buttons"></script> -->
+
+	<script type="text/javascript" src="./Underfitting and Overfitting in Machine Learning_files/sharethis.js.download"></script>
+
+	<div class="wrap with-logo fixed-header-mobile">
+					<section class="login-section " id="section2" style="top: 0px;">
+				<div>
+					<div class="container p">
+						<!-- <div class="row desktop-header">
+							<div class="col-lg-6">
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									<div class="content-box big ch-item wow fadeInLeft animated p">
+										<div class="cont-space"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6">
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									<div class="content-box big ch-item wow fadeInLeft animated p">
+										<div class="cont-space login-links">
+											<a href="https://datascience.foundation/login">Login</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://datascience.foundation/joinus">Join Us</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://datascience.foundation/subscribe-for-newsletter">Subscribe to Newsletter</a>
+										</div>
+										<div class="cont-space login-sub-text">
+											Login to View News Feed and Manage Profile
+										</div>
+									</div>
+								</div>
+							</div>
+						</div> -->
+
+						<div class="row desktop-header">
+							<div class="col-lg-6">
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									<div class="content-box big ch-item wow fadeInLeft animated p animated" style="visibility: visible;">
+										<div class="cont-space"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12">								
+								<div class="content-box ch-item wow fadeInLeft animated p top-header-box animated" style="visibility: visible;">
+									<div class="cont-space login-links">
+										<a href="https://datascience.foundation/login" data-ol-has-click-handler="">Login</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://datascience.foundation/joinus" data-ol-has-click-handler="">Join Us</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://datascience.foundation/subscribe-for-newsletter" data-ol-has-click-handler="">Subscribe to Newsletter</a>
+									</div>
+									<div class="cont-space login-sub-text">
+										Login to View News Feed and Manage Profile
+									</div>
+								</div>								
+							</div>
+						</div>
+
+						<!------------ Mobile Menu ------------->
+						<div class="row mobile-header">
+							<div class="col-md-12 pl10">
+								<div class="mobile-menu-icon">
+									<span onclick="openMobileMenu()">☰</span>
+								</div>
+								<div class="top-header-link ">
+									<div class="left-link"><a href="https://datascience.foundation/login" data-ol-has-click-handler="">Login</a></div><div class="center-logo-link "><a href="https://datascience.foundation/" data-ol-has-click-handler=""><img src="./Underfitting and Overfitting in Machine Learning_files/logo_icon_small.png" width="40px"></a></div><div class="right-link"><a href="https://datascience.foundation/joinus" data-ol-has-click-handler="">Join Us</a></div>
+								</div>
+
+								<div class="login-sub-text-mobile">Login to View News Feed and Manage Profile</div>
+
+							</div>
+						</div>
+						<!------------ End Mobile Menu ------------->
+
+					</div>
+				</div>
+			</section>
+
+		
+		<!-- Image Background Parallax -->
+		<div id="section" class="image-parallax" style="background-image: url(https://datascience.foundation/img/slider/bx1.png)">
+			<div class="bg-overlay logo-background-section">
+				<div class="slide-content light">
+					<div class="align-center">
+					<!-- Top Logo -->
+					<div class="top-logo">
+						<div class="scrollNormal"> <a href="https://datascience.foundation/" data-ol-has-click-handler=""> <img alt="Agency" src="./Underfitting and Overfitting in Machine Learning_files/logo_welcome.png"></a> </div>
+						<div class="scrollDown"> <a href="https://datascience.foundation/" data-ol-has-click-handler=""> <img alt="Agency" src="./Underfitting and Overfitting in Machine Learning_files/logo2_welcome.png"></a> </div>
+					</div>
+
+					<div id="navigation">
+						<nav class="navbar navbar-custom cl-effect-21" role="navigation">
+							<div class="container p">
+								<div class="row">
+									<div class="col-md-12 mob-menu">
+										<div class="row">
+											<div id="cssmenu"><div id="menu-line" style="width: 132px; left: 174.938px;"></div><div id="menu-line" style="width: 132px; left: 174.938px;"></div><div id="menu-button" data-ol-has-click-handler="">Menu</div>
+												<ul>
+													<!-- <li class='navbar-custom-li '><a href='https://datascience.foundation/'>Home</a></li> -->
+													<li class="has-sub "><span class="submenu-button" data-ol-has-click-handler=""></span><a href="https://datascience.foundation/" data-ol-has-click-handler="">Home</a></li><li class="has-sub active"><span class="submenu-button" data-ol-has-click-handler=""></span><a href="https://datascience.foundation/information" data-ol-has-click-handler="">Information</a><ul><li> <a href="https://datascience.foundation/discussion" data-ol-has-click-handler="">Discussion</a> </li><li> <a href="https://datascience.foundation/datatalk" data-ol-has-click-handler="">Articles</a> </li><li> <a href="https://datascience.foundation/sciencewhitepaper" data-ol-has-click-handler="">Whitepapers</a> </li><li> <a href="https://datascience.foundation/usecase" data-ol-has-click-handler="">Use Cases</a> </li><li> <a href="https://datascience.foundation/datascience" data-ol-has-click-handler="">News</a> </li><li> <a href="https://datascience.foundation/contributors" data-ol-has-click-handler="">Contributors</a> </li><li> <a href="https://datascience.foundation/subscribe-for-newsletter" data-ol-has-click-handler=""> Subscribe to Newsletter</a> </li></ul></li><li class="has-sub"><span class="submenu-button" data-ol-has-click-handler=""></span><a href="https://datascience.foundation/universitycourses" data-ol-has-click-handler="">Courses</a><ul><li> <a href="https://datascience.foundation/datasciencecourses" data-ol-has-click-handler="">Data Science &amp; Analytics</a> </li><li> <a href="https://datascience.foundation/statisticscourses" data-ol-has-click-handler="">Statistics and Related Courses</a> </li><li> <a href="https://datascience.foundation/onlinelearning" data-ol-has-click-handler="">Online Data Science Courses</a> </li></ul></li><li class="has-sub"><span class="submenu-button" data-ol-has-click-handler=""></span><a href="https://datascience.foundation/prodigy" data-ol-has-click-handler="">Prodigy</a><ul><li> <a href="https://datascience.foundation/prodigy/login" data-ol-has-click-handler="">Prodigy Login</a> </li><li> <a href="https://datascience.foundation/prodigy/find-out-more" data-ol-has-click-handler="">Prodigy Find Out More</a> </li><li> <a href="https://datascience.foundation/prodigy/academy" data-ol-has-click-handler="">Prodigy Free Services</a> </li><li> <a href="https://datascience.foundation/prodigy/feedback" data-ol-has-click-handler="">Prodigy Feedback</a> </li><li> <a href="https://datascience.foundation/prodigy/terms-&amp;-conditions" data-ol-has-click-handler="">Prodigy T&amp;Cs</a> </li></ul></li><li class="has-sub"><span class="submenu-button" data-ol-has-click-handler=""></span><a href="https://datascience.foundation/awards" data-ol-has-click-handler="">Awards</a><ul><li> <a href="https://datascience.foundation/competition" data-ol-has-click-handler="">Contributors Competition</a> </li><li> <a href="https://datascience.foundation/writeroftheyear" data-ol-has-click-handler="">Data Science Writer Of The Year</a> </li></ul></li><li class="has-sub"><span class="submenu-button" data-ol-has-click-handler=""></span><a href="https://datascience.foundation/membership" data-ol-has-click-handler="">Membership</a><ul><li> <a href="https://datascience.foundation/individual" data-ol-has-click-handler="">Individual</a> </li><li> <a href="https://datascience.foundation/organisational" data-ol-has-click-handler="">Organisational</a> </li><li> <a href="https://datascience.foundation/scienceuniversity" data-ol-has-click-handler="">University</a> </li><li> <a href="https://datascience.foundation/associate" data-ol-has-click-handler="">Associate</a> </li><li> <a href="https://datascience.foundation/affiliate" data-ol-has-click-handler="">Affiliate</a> </li><li> <a href="https://datascience.foundation/benefit" data-ol-has-click-handler="">Benefits</a> </li><li> <a href="https://datascience.foundation/memberfees" data-ol-has-click-handler="">Membership Fees</a> </li><li> <a href="https://datascience.foundation/joinus" data-ol-has-click-handler="">Join Us</a> </li></ul></li><li class="has-sub"><span class="submenu-button" data-ol-has-click-handler=""></span><a href="https://datascience.foundation/consultancy" data-ol-has-click-handler="">Consultancy</a><ul><li> <a href="https://datascience.foundation/professionalservices" data-ol-has-click-handler="">Professional Services</a> </li><li> <a href="https://datascience.foundation/methodology" data-ol-has-click-handler="">Project Methodology</a> </li><li> <a href="https://datascience.foundation/unlock-your-data" data-ol-has-click-handler="">Unlock Your Data</a> </li><li> <a href="https://datascience.foundation/advanced-analytics" data-ol-has-click-handler="">Advanced Analytics</a> </li></ul></li><li class="has-sub"><span class="submenu-button" data-ol-has-click-handler=""></span><a href="https://datascience.foundation/resource" data-ol-has-click-handler="">Resources</a><ul><li> <a href="https://datascience.foundation/big-data-resource" data-ol-has-click-handler="">Big Data Resources</a> </li><li> <a href="https://datascience.foundation/technology" data-ol-has-click-handler="">Technology Resources</a> </li><li> <a href="https://datascience.foundation/speaker" data-ol-has-click-handler="">Speakers</a> </li><li> <a href="https://datascience.foundation/jobs" data-ol-has-click-handler="">Data Science Jobs Board</a> </li><li> <a href="https://datascience.foundation/cv" data-ol-has-click-handler="">Member CVs</a> </li></ul></li><li class="has-sub"><span class="submenu-button" data-ol-has-click-handler=""></span><a href="https://datascience.foundation/about" data-ol-has-click-handler="">About</a><ul><li> <a href="https://datascience.foundation/contact" data-ol-has-click-handler="">Contact</a> </li><li> <a href="https://datascience.foundation/dsf" data-ol-has-click-handler="">Data Science Foundation</a> </li><li> <a href="https://datascience.foundation/steering" data-ol-has-click-handler="">Steering Group</a> </li><li> <a href="https://datascience.foundation/professional" data-ol-has-click-handler="">Professional Standards</a> </li><li> <a href="https://datascience.foundation/government" data-ol-has-click-handler="">Government And Industry</a> </li><li> <a href="https://datascience.foundation/sponsor" data-ol-has-click-handler="">Sponsors</a> </li><li> <a href="https://datascience.foundation/supporter" data-ol-has-click-handler="">Supporter</a> </li><li> <a href="https://datascience.foundation/applicationform" data-ol-has-click-handler="">Application Form</a> </li><li> <a href="https://datascience.foundation/education" data-ol-has-click-handler="">Education</a> </li><li> <a href="https://datascience.foundation/legal" data-ol-has-click-handler="">Legal Notice</a> </li><li> <a href="https://datascience.foundation/privacy" data-ol-has-click-handler="">Privacy</a> </li><li> <a href="https://datascience.foundation/sitemap" data-ol-has-click-handler="">Sitemap</a> </li></ul></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</nav>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		
+		<div id="mobileMenuSidebar" class="mobile-menu-sidenav" style="width: 0px;">
+			<i class="fa fa-times mobile-menu-close" onclick="closeMobileMenu()"></i>
+
+			<div id="jquery-accordion-menu" class="jquery-accordion-menu">
+				
+				<ul class="fixed-menu-ul"><li class="parent-menu "><div class="parent-menu-title"><a href="https://datascience.foundation/" data-ol-has-click-handler="">Home</a></div></li></ul>
+				<div class="menu-scroll-container">
+					<ul>
+						<li class="parent-menu show active" style="cursor: pointer;"><div class="parent-menu-title">Information<i class="fa fa-arrow-down submenu-indicator"></i></div><ul class="submenu"> <li class=""> <a href="https://datascience.foundation/discussion" data-ol-has-click-handler="">Discussion</a> </li><li class=""> <a href="https://datascience.foundation/datatalk" data-ol-has-click-handler="">Articles</a> </li><li class="active"> <a href="https://datascience.foundation/sciencewhitepaper" data-ol-has-click-handler="">Whitepapers</a> </li><li class=""> <a href="https://datascience.foundation/usecase" data-ol-has-click-handler="">Use Cases</a> </li><li class=""> <a href="https://datascience.foundation/datascience" data-ol-has-click-handler="">News</a> </li><li class=""> <a href="https://datascience.foundation/contributors" data-ol-has-click-handler="">Contributors</a> </li></ul></li><li class="parent-menu " style="cursor: pointer;"><div class="parent-menu-title">Courses<i class="fa fa-arrow-down submenu-indicator"></i></div><ul class="submenu"> <li class=""> <a href="https://datascience.foundation/datasciencecourses" data-ol-has-click-handler="">Data Science &amp; Analytics</a> </li><li class=""> <a href="https://datascience.foundation/statisticscourses" data-ol-has-click-handler="">Statistics and Related Courses</a> </li><li class=""> <a href="https://datascience.foundation/onlinelearning" data-ol-has-click-handler="">Online Data Science Courses</a> </li></ul></li><li class="parent-menu " style="cursor: pointer;"><div class="parent-menu-title">Prodigy<i class="fa fa-arrow-down submenu-indicator"></i></div><ul class="submenu"> <li class=""> <a href="https://datascience.foundation/prodigy/login" data-ol-has-click-handler="">Prodigy Login</a> </li><li class=""> <a href="https://datascience.foundation/prodigy/find-out-more" data-ol-has-click-handler="">Prodigy Find Out More</a> </li><li class=""> <a href="https://datascience.foundation/prodigy/academy" data-ol-has-click-handler="">Prodigy Free Services</a> </li><li class=""> <a href="https://datascience.foundation/prodigy/feedback" data-ol-has-click-handler="">Prodigy Feedback</a> </li><li class=""> <a href="https://datascience.foundation/prodigy/terms-&amp;-conditions" data-ol-has-click-handler="">Prodigy T&amp;Cs</a> </li></ul></li><li class="parent-menu " style="cursor: pointer;"><div class="parent-menu-title">Awards<i class="fa fa-arrow-down submenu-indicator"></i></div><ul class="submenu"> <li class=""> <a href="https://datascience.foundation/competition" data-ol-has-click-handler="">Contributors Competition</a> </li><li> <a href="https://datascience.foundation/writeroftheyear" data-ol-has-click-handler="">Data Science Writer</a> </li></ul></li><li class="parent-menu " style="cursor: pointer;"><div class="parent-menu-title">Membership<i class="fa fa-arrow-down submenu-indicator"></i></div><ul class="submenu"> <li class=""> <a href="https://datascience.foundation/individual" data-ol-has-click-handler="">Individual</a> </li><li class=""> <a href="https://datascience.foundation/organisational" data-ol-has-click-handler="">Organisational</a> </li><li class=""> <a href="https://datascience.foundation/scienceuniversity" data-ol-has-click-handler="">University</a> </li><li class=""> <a href="https://datascience.foundation/associate" data-ol-has-click-handler="">Associate</a> </li><li class=""> <a href="https://datascience.foundation/affiliate" data-ol-has-click-handler="">Affiliate</a> </li><li class=""> <a href="https://datascience.foundation/benefit" data-ol-has-click-handler="">Benefits</a> </li><li class=""> <a href="https://datascience.foundation/memberfees" data-ol-has-click-handler="">Membership Fees</a> </li><li class=""> <a href="https://datascience.foundation/joinus" data-ol-has-click-handler="">Join Us</a> </li></ul></li><li class="parent-menu " style="cursor: pointer;"><div class="parent-menu-title">Consultancy<i class="fa fa-arrow-down submenu-indicator"></i></div><ul class="submenu"> <li class=""> <a href="https://datascience.foundation/professionalservices" data-ol-has-click-handler="">Professional Services</a> </li><li class=""> <a href="https://datascience.foundation/methodology" data-ol-has-click-handler="">Project Methodology</a> </li><li class=""> <a href="https://datascience.foundation/unlock-your-data" data-ol-has-click-handler="">Unlock Your Data</a> </li><li class=""> <a href="https://datascience.foundation/advanced-analytics" data-ol-has-click-handler="">Advanced Analytics</a> </li></ul></li><li class="parent-menu " style="cursor: pointer;"><div class="parent-menu-title">Resources<i class="fa fa-arrow-down submenu-indicator"></i></div><ul class="submenu"> <li class=""> <a href="https://datascience.foundation/big-data-resource" data-ol-has-click-handler="">Big Data Resources</a> </li><li class=""> <a href="https://datascience.foundation/technology" data-ol-has-click-handler="">Technology Resources</a> </li><li class=""> <a href="https://datascience.foundation/speaker" data-ol-has-click-handler="">Speakers</a> </li><li class=""> <a href="https://datascience.foundation/jobs" data-ol-has-click-handler="">Data Science Jobs Board</a> </li><li class=""> <a href="https://datascience.foundation/cv" data-ol-has-click-handler="">Member CVs</a> </li></ul></li><li class="parent-menu " style="cursor: pointer;"><div class="parent-menu-title">About<i class="fa fa-arrow-down submenu-indicator"></i></div><ul class="submenu"> <li class=""> <a href="https://datascience.foundation/contact" data-ol-has-click-handler="">Contact</a> </li><li class=""> <a href="https://datascience.foundation/dsf" data-ol-has-click-handler="">Data Science Foundation</a> </li><li class=""> <a href="https://datascience.foundation/steering" data-ol-has-click-handler="">Steering Group</a> </li><li class=""> <a href="https://datascience.foundation/professional" data-ol-has-click-handler="">Professional Standards</a> </li><li class=""> <a href="https://datascience.foundation/government" data-ol-has-click-handler="">Government And Industry</a> </li><li class=""> <a href="https://datascience.foundation/sponsor" data-ol-has-click-handler="">Sponsors</a> </li><li class=""> <a href="https://datascience.foundation/supporter" data-ol-has-click-handler="">Supporter</a> </li><li class=""> <a href="https://datascience.foundation/applicationform" data-ol-has-click-handler="">Application Form</a> </li><li class=""> <a href="https://datascience.foundation/education" data-ol-has-click-handler="">Education</a> </li><li class=""> <a href="https://datascience.foundation/legal" data-ol-has-click-handler="">Legal Notice</a> </li><li class=""> <a href="https://datascience.foundation/privacy" data-ol-has-click-handler="">Privacy</a> </li><li class=""> <a href="https://datascience.foundation/sitemap" data-ol-has-click-handler="">Sitemap</a> </li></ul></li>							<li class=""><div class="parent-menu-title"><a href="https://datascience.foundation/subscribe-for-newsletter" data-ol-has-click-handler="">Subscribe to Newsletter</a></div></li>
+											</ul>								
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+      
+        
+                    <div class="container common-alert-section page-body-start">
+                            </div>
+                
+     
+        
+<section class="blog" id="section3">
+    <div class="content pt50 pb50">
+        <div class="container">
+            <div class="row">
+                <div class="posts-block col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                    <article class="post hentry">
+                        <div class="post-content-wrap">
+                            <header class="post-header">
+                                <h3>Underfitting and Overfitting in Machine Learning</h3>
+                                <div class="blog-entry-meta pt10">
+                                    <div class="blog-entry-meta-date"> <i class="fa fa-edit"></i> <span class="blog-entry-meta-date-day"><b>A DSF Whitepaper</b></span> </div>
+                                    <div class="blog-entry-meta-date"> <i class="fa fa-calendar"></i>
+                                        <span class="blog-entry-meta-date-day">
+                                            13 June 2020                                        </span>
+                                    </div>
+
+                                    
+                                    <div class="blog-entry-meta-date vertical-align-middle">
+                                        <i class="fa fa-user"></i> <span class="blog-entry-meta-date-day"> Mayank Tripathi </span>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-xs-12 pl0 mt10 mb20">
+                                                                                    <div class="blog-entry-meta-btn vertical-align-middle inline-block"> <a class="btn btn-primary btn-lg mb10 mr10" style="padding: 10px 16px;" href="https://datascience.foundation/individual/view/1094" data-ol-has-click-handler="">Author Profile</a></div>
+                                            <div class="blog-entry-meta-btn vertical-align-middle inline-block"> <a class="btn btn-primary btn-lg mr10 mb10" style="padding: 10px 16px;" href="https://datascience.foundation/portfolio/mayanktripathi" data-ol-has-click-handler="">Other Articles</a></div>
+                                        
+                                                                                <div class="blog-entry-meta-btn vertical-align-middle inline-block">
+                                            <a class="btn btn-primary btn-lg author-follow-btn author-follow-btn-detail mb10 mr10  non-dsf-member" author-id="1094" author-type="User" title="Follow Mayank" style="padding: 10px 16px;">Follow <span class="count">(29)</span>                                            </a>
+                                        </div>
+                                        
+                                    </div>
+
+                                    <div class="social-share-buttons" style="clear: both; display: block;">
+                                        <p style="font-size: initial;margin-bottom: 0px;font-size: 14px;">Share with your network:</p>
+                                                                                  <div data-description="Machine learning developers often encounter models that perform well on a data set, but dont live up to expectations when used on unseen or test data. This problem is called Overfitting. If you would like to learn more about Overfitting and how to avoid it, read on." data-image="https://datascience.foundation/img/logo_200.png" data-title="Underfitting and Overfitting in Machine Learning" data-url="https://datascience.foundation/sciencewhitepaper/underfitting-and-overfitting-in-machine-learning" data-short-url="https://datascience.foundation/sciencewhitepaper/underfitting-and-overfitting-in-machine-learning" class="button btn btn-primary btn-lg mt10 mb10 mr10 button share-button facebook-share-button st-custom-button" data-network="facebook" rel="Whitepaper" rel1="132" rel2="Facebook" rel3="machine-learning" data-ol-has-click-handler=""><i class="fa fa-facebook "></i><span class="count">1</span></div>
+                                          
+                                          <div data-description="Machine learning developers often encounter models that perform well on a data set, but dont live up to expectations when used on unseen or test data. This problem is called Overfitting. If you would like to learn more about Overfitting and how to avoid it, read on." data-image="https://datascience.foundation/img/logo_200.png" data-title="Underfitting and Overfitting in Machine Learning" data-url="https://datascience.foundation/sciencewhitepaper/underfitting-and-overfitting-in-machine-learning" data-short-url="https://datascience.foundation/sciencewhitepaper/underfitting-and-overfitting-in-machine-learning" class="button btn btn-primary btn-lg mt10 mb10 mr10 button share-button linkedin-share-button st-custom-button" data-network="linkedin" rel="Whitepaper" rel1="132" rel2="Linkedin" rel3="machine-learning" data-ol-has-click-handler=""><i class="fa fa-linkedin "></i><span class="count">6</span></div>
+
+                                          <div data-description="Machine learning developers often encounter models that perform well on a data set, but dont live up to expectations when used on unseen or test data. This problem is called Overfitting. If you would like to learn more about Overfitting and how to avoid it, read on." data-image="https://datascience.foundation/img/logo_200.png" data-title="Underfitting and Overfitting in Machine Learning" data-url="https://datascience.foundation/sciencewhitepaper/underfitting-and-overfitting-in-machine-learning" data-short-url="https://datascience.foundation/sciencewhitepaper/underfitting-and-overfitting-in-machine-learning" class="button btn btn-primary btn-lg mt10 mb10 mr10 button share-button twitter-share-button st-custom-button st-hide-label" data-network="twitter" rel="Whitepaper" rel1="132" rel2="Twitter" rel3="machine-learning" data-ol-has-click-handler=""><i class="fa fa-twitter "></i><span class="count"></span></div>
+
+                                      </div>
+                                </div>
+                            </header>
+
+                            <div class="article-description">
+                                <div class="col-md-12 row">
+<div class="col-md-12  text-center col-xs-12"><img alt="" class="img-responsive m" src="./Underfitting and Overfitting in Machine Learning_files/underfitting_and_overfitting_in_machine_learning_image.png" data-ol-has-click-handler=""></div>
+
+<div class="clearfix text-nowrap">&nbsp;</div>
+
+<p class="mt20">Believe it or not, in the real world we will never have a Clean and Perfect Dataset. Each dataset will have some strange or missing parts or imbalanced data. Or we as a Machine Learning Developers will introduce some errors or deficiencies to our model. One of the main reasons for this is that we want our model to be able to describe an underlying pattern. Unfortunately the nature of real life data is that it comes with some level of noise and outliers, and for the most part we want the model to capture the signal in the data and not the noise.</p>
+
+<p>Now, to capture the underlying pattern in data accurately, the model may have to incorporate the noise. The implication is that the derived model fits the modelling data well but does not generalize well enough to other samples that have not been included in the modelling process.</p>
+
+<p>There is terminology to describe how well a machine learning model learns and generalizes to new data, this is overfitting and underfitting. The goal of a good machine learning model is to generalize well from the training dataset to any dataset from the problem domain. This allows us to make predictions based on a dataset the model has never seen.</p>
+
+<p>In statistics a fit is referred to as, how close your model is to the target class / function / value. Overfitting and underfitting are the two biggest causes of poor performance of machine learning algorithms or models.</p>
+
+<p>Let’s understand what is Best Fit, Overfitting and Underfitting? Followed by some code.</p>
+
+<h4><strong>What is Overfitting &amp; Underfitting?</strong></h4>
+
+<p class="mt10"><strong>Overfitting</strong> refers to the scenario where a machine learning model can’t generalize or fit well on unseen dataset. A clear sign of machine learning overfitting is if its error on the testing or validation dataset is much greater than the error on training dataset.</p>
+
+<p><strong>Overfitting</strong> is a term used in statistics that refers to a modeling error that occurs when a function corresponds too closely to a dataset. As a result, overfitting may fail to fit additional data, and this may affect the accuracy of predicting future observations.</p>
+
+<p><strong>Overfitting</strong> happens when a model learns the detail and noise in the training dataset to the extent that it negatively impacts the performance of the model on a new dataset. This means that the noise or random fluctuations in the training dataset is picked up and learned as concepts by the model. The problem is that these concepts do not apply to new datasets and negatively impact the model’s ability to generalize.</p>
+
+<p>The opposite of overfitting is underfitting.</p>
+
+<p><strong>Underfitting</strong> refers to a model that can neither model the training dataset nor generalize to new dataset. An underfit machine learning model is not a suitable model and will be obvious as it will have poor performance on the training dataset.</p>
+
+<p><strong>Underfitting</strong> is often not discussed as it is easy to detect given a good performance metric.</p>
+
+<h4><strong>Understanding it with Examples</strong></h4>
+
+<p class="mt10"><strong>Example 1:</strong></p>
+
+<p>Let’s say three students have prepared for a mathematics examination.</p>
+
+<p>The first student has only studied Addition mathematic operations and skipped other mathematics operations such as Subtraction, Division, Multiplication etc.</p>
+
+<p>The second student has a particularly good memory. Thus, second student has memorized all the problems presented in the textbook.</p>
+
+<p>And the third student has studied all mathematical operations and is well prepared for the exam.</p>
+
+<p>In the exam student one will only be able to solve the questions related to Addition and will fail in problems or questions asked related to other mathematics operations.</p>
+
+<p>Student two will only be able to answer questions if they happened to appear in the textbook (as he has memorized it) and will not be able to answer any other questions.</p>
+
+<p>Student three will be able to solve all the exam problems reasonably well.</p>
+
+<p>Machine Learning algorithms have similar behavior to our three students, sometimes the model generated by the algorithm are similar to the first student. They learn from only from a small part of the training dataset, in such cases the model is <strong>Underfitting.</strong></p>
+
+<p>Sometimes the model will memorize the entire training dataset, like the second student. They perform very well on known instances, but faulter badly on unseen data or unknown instances. In such cases the model is said to be <strong>Overfitting.</strong></p>
+
+<p>And when model does well in both the training dataset and on the unseen data or unknown instances like student three, it is a good fit.</p>
+
+<p><strong>Example 2: </strong></p>
+
+<p>Let’s have another example and consider that you have visited a city “X” and took a ride in a taxi. On speaking to friends, you later realize that the taxi driver charged you twice or three times more than the standard fare. This occurred as you were new in the city and driver quite literally took you for a ride.</p>
+
+<p>Also, you purchased some items from a street vendor, and you again ended up paying more than they were worth. You finally decide that the people in the city “X” are dishonest. Which is a human trait, people often generalize. Machine learning models also have this weakness if we are not careful to avoid bias during the development stages: modeling, selecting algorithms, features, training dataset etc.</p>
+
+<p>Suppose in the same city “X” another taxi driver charged you reasonably and as per the meter, but based on experience, you consider that this driver has also charged more. This is called Overfitting.</p>
+
+<p>From above two examples we can say that, if model performs well on test or unseen dataset then it is a best fit or good model. And if did not perform well on test or unseen dataset but did well on training dataset then it is an Overfit model. And any model that did not do well in the training dataset nor in test dataset then it is a Underfit model.</p>
+
+<div class="col-md-12  text-center col-xs-12"><img alt="" class="img-responsive m" src="./Underfitting and Overfitting in Machine Learning_files/underfitting_and_overfitting_in_machine_learning_test_dataset_then_it_is_a_underfit_model.png" data-ol-has-click-handler=""></div>
+
+<div class="clearfix text-nowrap">&nbsp;</div>
+
+<p class="mt20">Next will see an example with python code.</p>
+
+<p><strong>Example 3:</strong></p>
+
+<p>This example demonstrates the problems of underfitting and overfitting and how we can use linear regression with polynomial features to approximate nonlinear functions.</p>
+
+<p>Let us generate two variables say X and y. X will have some random number / sample, where as y is a part of cosine function.</p>
+
+<p>Based on the data the graph will look like… simple plotting X and y.</p>
+
+<div class="col-md-12  text-center col-xs-12"><img alt="" class="img-responsive m" src="./Underfitting and Overfitting in Machine Learning_files/underfitting_and_overfitting_in_machine_learning_simple_plotting_X_and_y.png" data-ol-has-click-handler=""></div>
+
+<div class="clearfix text-nowrap">&nbsp;</div>
+
+<p class="mt10">Let’s train our model using Linear Regression, predict and visualize it.</p>
+
+<div class="col-md-12  text-center col-xs-12"><img alt="" class="img-responsive m" src="./Underfitting and Overfitting in Machine Learning_files/underfitting_and_overfitting_in_machine_learning_predict_and_visualize_it.png" data-ol-has-click-handler=""></div>
+
+<div class="clearfix text-nowrap">&nbsp;</div>
+
+<div class="col-md-12  text-center col-xs-12"><img alt="" class="img-responsive m pt20" src="./Underfitting and Overfitting in Machine Learning_files/underfitting_and_overfitting_in_machine_learning_predict_and_visualize_it_2.png" data-ol-has-click-handler=""></div>
+
+<div class="clearfix text-nowrap">&nbsp;</div>
+
+<p class="mt10">Let’s visualize the predicted model.</p>
+
+<div class="col-md-12  text-center col-xs-12"><img alt="" class="img-responsive m" src="./Underfitting and Overfitting in Machine Learning_files/underfitting_and_overfitting_in_machine_learning_predict_and_visualize_it_3.png" data-ol-has-click-handler=""></div>
+
+<div class="clearfix text-nowrap">&nbsp;</div>
+
+<p class="mt10">We can see that the straight line is unable to capture the patterns in the data. This is an example of under-fitting. The error will be huge in this model.</p>
+
+<p>Let’s consider the Polynomial feature with some degrees and train our model.</p>
+
+<div class="col-md-12  text-center col-xs-12"><img alt="" class="img-responsive m" src="./Underfitting and Overfitting in Machine Learning_files/underfitting_and_overfitting_in_machine_learning_some_degrees_and_train_our_model.png" data-ol-has-click-handler=""></div>
+
+<div class="clearfix text-nowrap">&nbsp;</div>
+
+<p class="mt10">We can see that a linear function (polynomial with degree 1) is not enough to fit the training samples. This is called <strong>underfitting.</strong></p>
+
+<p>A polynomial of degree 4 approximates the true function almost perfectly. This is called Best Fit or Good Model.</p>
+
+<p>However, for higher degrees (with degree 15) the model will overfit the training dataset, i.e. it learns the noise of the training data.</p>
+
+<p>We evaluate quantitatively overfitting / underfitting by using cross-validation.</p>
+
+<p>We also calculate the mean squared error (MSE) on the validation dataset, the higher the less likely the model generalizes correctly from the training dataset.</p>
+
+<p>Full code can be referenced from<br>
+<a href="https://colab.research.google.com/drive/1XzngJPT8WUyHFW-JxhrawVhPurJlv1cA?usp=sharing" target="_blanck" data-ol-has-click-handler="">https://colab.research.google.com/drive/1XzngJPT8WUyHFW-JxhrawVhPurJlv1cA?usp=sharing </a></p>
+
+<h4><strong>Detecting Overfitting or Underfitting</strong></h4>
+
+<p class="mt10">A key challenge of detecting any kind of fit (be it underfitting or best fit or overfitting), is almost impossible before you test the data. It can help address the inherent characteristics of overfitting, which is the inability to generalize a dataset. The data can therefore be separated into different subsets to make it easy for training and testing. The data is split into two main parts, i.e., a test dataset and a training dataset.</p>
+
+<p>Splitting technique may vary based on the type of dataset and one can use any splitting technique.</p>
+
+<p>If our model does much better on the training dataset than on the test dataset, then we’re likely <strong>overfitting</strong> For example, our model performed with a 99% accuracy on the training dataset but only 50-55% accuracy on the test dataset. It is Overfitting the model and did not performed well on unseen dataset.</p>
+
+<p>If our model does much better on the test dataset than on the training dataset, then we are likely <strong>underfitting.</strong></p>
+
+<p>And if our model does well on both the training and test datasets then we have the best fit. For example, our model performed 90% accuracy on the training dataset and performs 88% - 92% accuracy on the test dataset. It is the best fit model.</p>
+
+<p>Another simple way to detect this is by using cross-validation. This attempts to examine the trained model with a new data set to check its predictive accuracy. Given a dataset, some portion of this is held back (say 30%) while the rest is used in training the model. Once the model has been trained the reserved data is then used to check the accuracy of the model compared to the accuracy of derived from the data used in training. A significant variance in these two flags overfitting.</p>
+
+<h4><strong>How to Prevent Overfitting or Underfitting</strong></h4>
+
+<p class="mt10">Detecting overfitting or underfitting is useful, but it does not solve the problem. Fortunately, you have several options to try. Here are a few of the most popular solutions.</p>
+
+<p>The remedy for Underfitting, is to move on and try alternate machine learning algorithms. Nevertheless, it does provide a good contrast to the problem of overfitting.</p>
+
+<p>To prevent overfitting, there are various ways and a few of them are shown below.</p>
+
+<ul>
+	<li>Cross-validation:
+	<ul>
+		<li class="pt10">Cross-validation is a powerful preventative measure against overfitting.</li>
+		<li class="pt10">Use your initial training data to generate multiple mini train-test splits. Use these splits to tune your model.</li>
+		<li class="pt10">In standard k-fold cross-validation, we partition the data into k subsets, called folds. Then, we iteratively train the algorithm on k-1 folds while using the remaining fold as the test set (called the “holdout fold”).</li>
+		<li class="pt10">Cross-validation allows you to tune hyperparameters with only your original training dataset. This allows you to keep your test dataset as a truly unseen dataset for selecting your final model.</li>
+	</ul>
+	</li>
+	<li class="pt10">Train with more data
+	<ul>
+		<li class="pt10">It won’t work every time, but training with more data can help algorithms detect the signal better.</li>
+		<li class="pt10">As the user feeds more training data into the model, it will be unable to overfit all the samples and will be forced to generalize to obtain results.</li>
+		<li class="pt10">Users should continually collect more data as a way of increasing the accuracy of the model.</li>
+		<li class="pt10">However, this method is considered expensive, and, therefore, users should ensure that the data being used is relevant and clean.</li>
+		<li class="pt10">Of course, that is not always the case. If we just add more noisy data, this technique will not help. That is why you should always ensure your data is clean and relevant.</li>
+	</ul>
+	</li>
+	<li class="pt10">Data augmentation
+	<ul>
+		<li class="pt10">An alternative to training with more data is data augmentation, which is less expensive compared to the former.</li>
+		<li class="pt10">If you are unable to continually collect more data, you can make the available data sets appear diverse.</li>
+		<li class="pt10">Data augmentation makes a data sample look slightly different every time it is processed by the model. The process makes each data set appear unique to the model and prevents the model from learning the characteristics of the data sets.</li>
+	</ul>
+	</li>
+	<li class="pt10">Reduce Complexity or Data Simplification
+	<ul>
+		<li class="pt10">Overfitting can occur due to the complexity of a model, such that, even with large volumes of data, the model still manages to overfit the training dataset.</li>
+		<li class="pt10">The data simplification method is used to reduce overfitting by decreasing the complexity of the model to make it simple enough that it does not overfit.</li>
+		<li class="pt10">Some of the actions that can be implemented include pruning a decision tree, reducing the number of parameters in a Neural Networks, and using dropout on a Neural Networks.</li>
+		<li class="pt10">Simplifying the model can also make the model lighter and run faster.</li>
+	</ul>
+	</li>
+	<li class="pt10">Regularization
+	<ul>
+		<li class="pt10">Regularization refers to a broad range of techniques for artificially forcing your model to be simpler.</li>
+		<li class="pt10">The method will depend on the type of learner you are using. For example, you could prune a decision tree, use dropout on a neural network, or add a penalty parameter to the cost function in regression.</li>
+		<li class="pt10">Oftentimes, the regularization method is a hyperparameter as well, which means it can be tuned through cross-validation.</li>
+		<li class="pt10">To learn about Regularization refer to the article <a href="https://datascience.foundation/datatalk/regularization-machine-learning-teacher" target="_blank" data-ol-has-click-handler="">https://datascience.foundation/datatalk/regularization-machine-learning-teacher</a> written and very well explained by Abhishek Mishra.</li>
+	</ul>
+	</li>
+	<li class="pt10">Ensembling
+	<ul>
+		<li class="pt10">Ensembles are machine learning methods for combining predictions from multiple separate models. There are a few different methods for ensembling, but the two most common are: Boosting and Bagging.</li>
+		<li class="pt10">Boosting works by using simple base models to increase their aggregate complexity. It trains a large number of weak learners arranged in a sequence, such that each learner in the sequence learns from the mistakes of the learner before it.</li>
+		<li class="pt10">Boosting attempts to improve the predictive flexibility of simple models.</li>
+		<li class="pt10">Boosting combines all the weak learners in the sequence to bring out one strong learner.</li>
+		<li class="pt10">Bagging works by training many strong learners arranged in a parallel pattern and then combining them to optimize their predictions.</li>
+		<li class="pt10">Bagging attempts to reduce the chance of overfitting complex models.</li>
+		<li class="pt10">Bagging then combines all the strong learners together to "smooth out" their predictions.</li>
+	</ul>
+	</li>
+	<li class="pt10">Early Stopping
+	<ul>
+		<li class="pt10">When you’re training a learning algorithm iteratively, you can measure how well each iteration of the model performs.</li>
+		<li class="pt10">Up until a certain number of iterations, new iterations improve the model. After that point, however, the model’s ability to generalize can weaken as it begins to overfit the training data.</li>
+		<li class="pt10">Early stopping refers stopping the training process before the learner passes that point.</li>
+		<li class="pt10">Today, this technique is mostly used in deep learning while other techniques (e.g. regularization) are preferred for classical machine learning.</li>
+	</ul>
+	</li>
+	<li class="pt10">You need to add regularization in case of Linear and SVM models.</li>
+	<li class="pt10">In decision tree models you can reduce the maximum depth.</li>
+	<li class="pt10">While in Neural Networks, you can introduce dropout layer to reduce overfitting.</li>
+</ul>
+
+<h4 class="pt10"><strong>Quick Summary</strong></h4>
+
+<p class="mt10">Overfitting is a modeling error that introduces bias to the model because it is too closely related to the data set.</p>
+
+<p>Overfitting makes the model relevant to its data set only, and irrelevant to any other data sets.</p>
+
+<p>Some of the methods used to prevent overfitting include ensembling, data augmentation, data simplification, and cross-validation.</p>
+
+<h4><strong>References</strong></h4>
+
+<ol>
+	<li><a href="https://datascience.foundation/datatalk/regularization-machine-learning-teacher" target="_blanck" data-ol-has-click-handler="">https://datascience.foundation/datatalk/regularization-machine-learning-teacher</a></li>
+	<li class="pt10">Wikipedia.org <a href="https://en.wikipedia.org/wiki/Overfitting" target="_blanck" data-ol-has-click-handler="">(https://en.wikipedia.org/wiki/Overfitting)</a></li>
+	<li class="pt10"><a href="https://scikit-learn.org/stable/auto_examples/model_selection/plot_underfitting_overfitting.html" target="_blanck" data-ol-has-click-handler="">https://scikit-learn.org/stable/auto_examples/model_selection/plot_underfitting_overfitting.html</a></li>
+</ol>
+</div>                            </div>
+                            <div class="clearfix"></div>
+                            <div class="rating_review">
+                                <div class="star_rating mt20">
+                                
+                                    <div class="mb5"><h5 class="mb0"><strong>Rate this Whitepaper </strong></h5><span>Rate 1 - 10 by clicking on a star</span></div>                                        <div class="rating_options submit_rating" average="10" title="Please rate this whitepaper.">
+                                                                                            <a href="javascript:;" class="fa fa-star" aria-hidden="true" rel-count="1" rel-id="132" rel-type="Whitepaper" rel-url="https://datascience.foundation/site/rating" data-ol-has-click-handler=""></a>
+                                                                                            <a href="javascript:;" class="fa fa-star" aria-hidden="true" rel-count="2" rel-id="132" rel-type="Whitepaper" rel-url="https://datascience.foundation/site/rating" data-ol-has-click-handler=""></a>
+                                                                                            <a href="javascript:;" class="fa fa-star" aria-hidden="true" rel-count="3" rel-id="132" rel-type="Whitepaper" rel-url="https://datascience.foundation/site/rating" data-ol-has-click-handler=""></a>
+                                                                                            <a href="javascript:;" class="fa fa-star" aria-hidden="true" rel-count="4" rel-id="132" rel-type="Whitepaper" rel-url="https://datascience.foundation/site/rating" data-ol-has-click-handler=""></a>
+                                                                                            <a href="javascript:;" class="fa fa-star" aria-hidden="true" rel-count="5" rel-id="132" rel-type="Whitepaper" rel-url="https://datascience.foundation/site/rating" data-ol-has-click-handler=""></a>
+                                                                                            <a href="javascript:;" class="fa fa-star" aria-hidden="true" rel-count="6" rel-id="132" rel-type="Whitepaper" rel-url="https://datascience.foundation/site/rating" data-ol-has-click-handler=""></a>
+                                                                                            <a href="javascript:;" class="fa fa-star" aria-hidden="true" rel-count="7" rel-id="132" rel-type="Whitepaper" rel-url="https://datascience.foundation/site/rating" data-ol-has-click-handler=""></a>
+                                                                                            <a href="javascript:;" class="fa fa-star" aria-hidden="true" rel-count="8" rel-id="132" rel-type="Whitepaper" rel-url="https://datascience.foundation/site/rating" data-ol-has-click-handler=""></a>
+                                                                                            <a href="javascript:;" class="fa fa-star" aria-hidden="true" rel-count="9" rel-id="132" rel-type="Whitepaper" rel-url="https://datascience.foundation/site/rating" data-ol-has-click-handler=""></a>
+                                                                                            <a href="javascript:;" class="fa fa-star" aria-hidden="true" rel-count="10" rel-id="132" rel-type="Whitepaper" rel-url="https://datascience.foundation/site/rating" data-ol-has-click-handler=""></a>
+                                                                                        <span class="review_detail">
+                                                (<span class="total_rating">4</span> Ratings)                                                (<span class="total_comment">1</span> Comments)                                                (<span class="total_view">40426</span> Views)                                            </span>
+                                        </div>
+                                                                    </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <footer class="post-footer">
+                                <a class="btn btn-primary btn-lg mt10 mb10 mr10" href="https://datascience.foundation/downloadpdf/132/whitepaper" onclick="trackOutboundLink(&#39;https://datascience.foundation/downloadpdf/132/whitepaper&#39;);" data-ol-has-click-handler=""><i class="fa fa-download pr5 pl5"></i><span class="hidden-xs article_footer_btn_span">Download</span></a>
+                                                                <button type="button" id="myBtn2" class="btn btn-primary btn-lg mb10 mr10 mt10 padding_left_new" data-toggle="modal" data-target="#myModal_132" data-backdrop="static" data-keyboard="false"><i class="fa fa-envelope pr5 pl5"></i><span class="hidden-xs article_footer_btn_span">Email</span></button>
+                                                                <p class="article-description">If you found this Whitepaper interesting, why not review the other Whitepapers in our <a href="https://datascience.foundation/sciencewhitepaper" target="_blank" data-ol-has-click-handler=""> archive</a>.</p>
+                                                                    <div class="col-xs-12 pl0 mt10">
+                                        <a class="btn btn-primary btn-lg mt5 mb10 mr10 " href="https://datascience.foundation/login#https://datascience.foundation/sciencewhitepaper/underfitting-and-overfitting-in-machine-learning" data-ol-has-click-handler="">Login to Comment and Rate</a>
+                                    </div>
+                                                            </footer>
+                            <div class="modal fade" id="myModal_132" role="dialog">
+                                <div class="modal-dialog margin-pdf">
+                                    <div class="modal-content pdf-margin">
+                                        <div class="modal-header">
+                                            <button type="button" class="close modal_close_button" data-dismiss="modal">×</button>
+                                            <h4 class="pdf-title">Email a PDF Whitepaper</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="w0" action="https://datascience.foundation/sciencewhitepaper" method="post">
+<input type="hidden" name="_frontendCSRF" value="2G3T_Q5u6zOoRRD24k0d9y-btIGTL0hGG67unzJfxEiNP5WPRSWYRsoVcZG9ey2kbvL3xfJLJB5v55fLSyuQCg==">                                            <div class="screen-reader-2">
+                                                <div class="input-group-new">
+                                                    <div class="form-group field-sendpdf-fromname required">
+
+<input type="text" id="sendpdf-fromname" class="form-control-wrpper form-control" name="SendPdf[fromname]" placeholder="Name of Sender" aria-required="true">
+
+<p class="help-block help-block-error"></p>
+</div>                                                    <span class="input-group-addon-contact"></span>
+                                                </div>
+                                            </div>
+                                            <div class="screen-reader-2">
+                                                <div class="input-group-new">
+                                                    <div class="form-group field-sendpdf-fromemail required">
+
+<input type="text" id="sendpdf-fromemail" class="form-control-wrpper form-control" name="SendPdf[fromemail]" placeholder="Email of Sender" aria-required="true">
+
+<p class="help-block help-block-error"></p>
+</div>                                                    <span class="input-group-addon-contact"></span>
+                                                </div>
+                                            </div>
+                                            <div class="screen-reader-2">
+                                                <div class="input-group-new">
+                                                    <div class="form-group field-sendpdf-toname required">
+
+<input type="text" id="sendpdf-toname" class="form-control-wrpper form-control" name="SendPdf[toname]" placeholder="Name of Recipient" aria-required="true">
+
+<p class="help-block help-block-error"></p>
+</div>                                                    <span class="input-group-addon-contact"></span>
+                                                </div>
+                                            </div>
+                                            <div class="screen-reader">
+                                                <div class="input-group-new">
+                                                    <div class="form-group field-sendpdf-toemail required">
+
+<input type="text" id="sendpdf-toemail" class="form-control-wrpper form-control" name="SendPdf[toemail]" placeholder="Email of Recipient" aria-required="true">
+
+<p class="help-block help-block-error"></p>
+</div>                                                    <span class="input-group-addon-contact"></span>
+                                                </div>
+                                            </div>
+                                            <div class="screen-reader-2 ml5 mr5">
+                                                <div class="input-group-new">
+                                                    <div class="form-group field-sendpdf-recaptcha">
+
+<input type="hidden" id="sendpdf-recaptcha" class="form-control" name="SendPdf[reCaptcha]"><div id="sendpdf-recaptcha-recaptcha-w0" class="g-recaptcha" data-sitekey="6LeFtrgUAAAAAGuLSGNjqtEI1foN858_nS1ou7-J" data-input-id="sendpdf-recaptcha" data-form-id="w0"><div style="width: 304px; height: 78px;"><div><iframe title="reCAPTCHA" src="./Underfitting and Overfitting in Machine Learning_files/anchor.html" width="304" height="78" role="presentation" name="a-7cm6rwstkfx4" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox"></iframe></div><textarea id="g-recaptcha-response" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea></div></div>
+
+<p class="help-block help-block-error"></p>
+</div>                                                </div>
+                                            </div>
+                                            <div class="form-group field-sendpdf-pdfid required">
+
+<input type="hidden" id="sendpdf-pdfid" class="form-control" name="SendPdf[pdfid]" value="132">
+
+<p class="help-block help-block-error"></p>
+</div>                                            <div class="bottom-panal_pdf">
+                                                <div class="button-area-text">
+                                                    <button type="submit" class="btn btn-info">Submit</button>                                                </div>
+                                            </div>
+                                            </form>                                        </div>
+                                        <div class="modal-footer"> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <div class="forum_thread mt20 forum-index">
+                            <div id="w0" class="list-view">
+                                                                <h3>Comments: </h3>
+                                                                    <div data-key="3418" id="thread_3418">
+                                        <div class="comment">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <div class="media">
+                                                        <div class="media-left" style="min-width: 100px;">
+                                                                                                                                                                                        <img class="img-object img-circle" src="./Underfitting and Overfitting in Machine Learning_files/join-group-men.png" width="50" height="50" alt="">
+                                                                                                                    </div>
+
+                                                        <div class="media-right" style="width:100%;">
+                                                            <div class="col-md-9 pl0 pr0">
+                                                                                                                                <p class="text-muted">Shrikant Vyas</p>
+                                                                <p class="text-muted">
+                                                                    <i class="glyphicon glyphicon-calendar"></i> 16 Jun 2020                                                                    <i class="glyphicon glyphicon-time"></i> 02:10:44 AM                                                                </p>
+                                                            </div>
+                                                            <div class="col-md-3 pl0 pr0 pull-right">
+                                                            </div>
+                                                            <div class="col-md-12 pl0 pr0">
+                                                                <div class="div_message message article-description discussion-comment break-word-class pt0">
+                                                                    <p>Very nice explanation of a very common problem. Examples are given in such a way that any one can understand easily. Also remedies for under fitting and over fitting are given in a structured manner.keep it up.</p>                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                
+                                
+                                                                    <h4> <a href="https://datascience.foundation/discussion/machine-learning/underfitting-and-overfitting-in-machine-learning" data-ol-has-click-handler=""> Go to discussion page</a> </h4>
+                                                            </div>
+                    </div></article>
+                </div>
+                
+                <div class="sidebar col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="widget search-form">
+                        <form name="enqiry" id="searchArticlesForm" method="get" action="https://datascience.foundation/sciencewhitepaper" enctype="multipart/form-data">
+                            <div class="input-group">
+                                <input type="text" class="search-input form-control search_articles_name" name="search_whitepaper" placeholder="Search...">
+                                <span class="input-group-btn">
+                                    <button class="subscribe-btn btn" type="submit"><i class="fa fa-search"></i></button>
+                                </span> </div>
+                        </form>
+                    </div>
+
+                    <div class="widget category mb0">
+                        <h3 class="title pb15">Categories</h3>
+                        <ul class="category-list slide">
+                                                            <li>
+                                    <a href="https://datascience.foundation/sciencewhitepaper/category/data-science" data-ol-has-click-handler="">Data Science</a>
+                                </li>
+                                                            <li>
+                                    <a href="https://datascience.foundation/sciencewhitepaper/category/data-security" data-ol-has-click-handler="">Data Security</a>
+                                </li>
+                                                            <li>
+                                    <a href="https://datascience.foundation/sciencewhitepaper/category/analytics" data-ol-has-click-handler="">Analytics</a>
+                                </li>
+                                                            <li>
+                                    <a href="https://datascience.foundation/sciencewhitepaper/category/machine-learning" data-ol-has-click-handler="">Machine Learning</a>
+                                </li>
+                                                            <li>
+                                    <a href="https://datascience.foundation/sciencewhitepaper/category/artificial-intelligence" data-ol-has-click-handler="">Artificial Intelligence</a>
+                                </li>
+                                                            <li>
+                                    <a href="https://datascience.foundation/sciencewhitepaper/category/robotics" data-ol-has-click-handler="">Robotics</a>
+                                </li>
+                                                            <li>
+                                    <a href="https://datascience.foundation/sciencewhitepaper/category/visualisation" data-ol-has-click-handler="">Visualisation</a>
+                                </li>
+                                                            <li>
+                                    <a href="https://datascience.foundation/sciencewhitepaper/category/internet-of-things" data-ol-has-click-handler="">Internet of Things</a>
+                                </li>
+                                                            <li>
+                                    <a href="https://datascience.foundation/sciencewhitepaper/category/people-&amp;-leadership" data-ol-has-click-handler="">People &amp; Leadership Skills</a>
+                                </li>
+                                                            <li>
+                                    <a href="https://datascience.foundation/sciencewhitepaper/category/other-topics" data-ol-has-click-handler="">Other Topics</a>
+                                </li>
+                                                    </ul>
+                    </div>
+
+                                            <div class="widget tabs mb0 mt40">
+                            <div id="horizontal-tabs" style="margin-bottom: 0px;">
+                                <ul class="tabs">
+                                    <li id="tab2"><a href="https://datascience.foundation/contributors" data-ol-has-click-handler="">Top Active Contributors</a></li>
+                                </ul>
+                                <div class="contents">
+                                    <div style="display: block;" id="content1" class="tabscontent">
+                                        <ul class="posts">
+                                                                                        <li style="margin-bottom: 0px;padding-bottom:0px !important;">
+                                                    <h5><a href="https://datascience.foundation/portfolio/balakrishnansubramanian" data-ol-has-click-handler=""> Balakrishnan Subramanian </a></h5>
+                                                </li>
+                                                                                            <li style="margin-bottom: 0px;padding-bottom:0px !important;">
+                                                    <h5><a href="https://datascience.foundation/portfolio/abhishekmishra" data-ol-has-click-handler=""> Abhishek Mishra </a></h5>
+                                                </li>
+                                                                                            <li style="margin-bottom: 0px;padding-bottom:0px !important;">
+                                                    <h5><a href="https://datascience.foundation/portfolio/mayanktripathi" data-ol-has-click-handler=""> Mayank Tripathi </a></h5>
+                                                </li>
+                                                                                            <li style="margin-bottom: 0px;padding-bottom:0px !important;">
+                                                    <h5><a href="https://datascience.foundation/portfolio/michaelbaron" data-ol-has-click-handler=""> Michael Baron </a></h5>
+                                                </li>
+                                                                                            <li style="margin-bottom: 0px;padding-bottom:0px !important;">
+                                                    <h5><a href="https://datascience.foundation/portfolio/santoshkumar" data-ol-has-click-handler=""> Santosh Kumar </a></h5>
+                                                </li>
+                                                                                    </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                                            <div class="widget tabs mb0 mt20">
+                            <div id="horizontal-tabs">
+                                <ul class="tabs">
+                                    <li id="tab2"><a href="https://datascience.foundation/sciencewhitepaper" data-ol-has-click-handler="">Recent Posts</a></li>
+                                </ul>
+                                <div class="contents">
+                                    <div style="display: block;" id="content1" class="tabscontent">
+                                        <ul class="posts">
+                                                                                        <li>
+                                                <h5 class="sidebarArticle"><a href="https://datascience.foundation/sciencewhitepaper/an-adaptive-model-for-runway-detection-and-localization-in-unmanned-aerial-vehicle" data-ol-has-click-handler=""> AN ADAPTIVE MODEL FOR RUNWAY DETECTION AND LOCALIZATION IN UNMANNED AERIAL VEHICLE</a></h5>
+                                                <span class="color">12 November 2021</span>
+                                            </li>
+                                                                                        <li>
+                                                <h5 class="sidebarArticle"><a href="https://datascience.foundation/sciencewhitepaper/deep-learning" data-ol-has-click-handler=""> Deep Learning</a></h5>
+                                                <span class="color">05 November 2021</span>
+                                            </li>
+                                                                                        <li>
+                                                <h5 class="sidebarArticle"><a href="https://datascience.foundation/sciencewhitepaper/machine-learning" data-ol-has-click-handler=""> Machine Learning</a></h5>
+                                                <span class="color">05 November 2021</span>
+                                            </li>
+                                                                                        <li>
+                                                <h5 class="sidebarArticle"><a href="https://datascience.foundation/sciencewhitepaper/data-is-a-new-oil-a-step-into-wsn-enabled-iot-and-security" data-ol-has-click-handler=""> Data is a New oil : A step into WSN enabled IoT and security</a></h5>
+                                                <span class="color">26 October 2021</span>
+                                            </li>
+                                                                                    </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                                            <div class="widget tabs mb0 mt20">
+                            <div id="horizontal-tabs">
+                                <ul class="tabs">
+                                    <li id="tab2" style="cursor: default;">Highest Rated Posts</li>
+                                </ul>
+                                <div class="contents">
+                                    <div style="display: block;" id="content1" class="tabscontent">
+                                        <ul class="posts">
+                                                                                        <li class="sidebarArticle">
+                                                <h5><a href="https://datascience.foundation/sciencewhitepaper/deep-learning-fighting-covid-19-with-neural-networks" data-ol-has-click-handler=""> DEEP LEARNING: FIGHTING COVID-19 WITH NEURAL NETWORKS </a></h5>
+                                                <span class="color">
+                                                    <div class="rated">
+                                                                                                                        <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                </div>
+                                                </span>
+                                            </li>
+                                                                                        <li class="sidebarArticle">
+                                                <h5><a href="https://datascience.foundation/sciencewhitepaper/internet-of-things-iot-network-protocol-queue-and-enabling-technologies" data-ol-has-click-handler=""> Internet of Things (IOT): Network Protocol Queue and Enabling Technologies </a></h5>
+                                                <span class="color">
+                                                    <div class="rated">
+                                                                                                                        <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                </div>
+                                                </span>
+                                            </li>
+                                                                                        <li class="sidebarArticle">
+                                                <h5><a href="https://datascience.foundation/sciencewhitepaper/understanding-imbalanced-datasets-and-techniques-for-handling-them" data-ol-has-click-handler=""> Understanding Imbalanced Datasets and techniques for handling them </a></h5>
+                                                <span class="color">
+                                                    <div class="rated">
+                                                                                                                        <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                </div>
+                                                </span>
+                                            </li>
+                                                                                        <li class="sidebarArticle">
+                                                <h5><a href="https://datascience.foundation/sciencewhitepaper/understanding-buzzwords-in-data-science" data-ol-has-click-handler=""> Understanding Buzzwords in Data Science </a></h5>
+                                                <span class="color">
+                                                    <div class="rated">
+                                                                                                                        <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                </div>
+                                                </span>
+                                            </li>
+                                                                                        <li class="sidebarArticle">
+                                                <h5><a href="https://datascience.foundation/sciencewhitepaper/data-driven-business-models-in-fmcg-retail" data-ol-has-click-handler=""> Data Driven Business Models in FMCG &amp; Retail </a></h5>
+                                                <span class="color">
+                                                    <div class="rated">
+                                                                                                                        <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                            <a class="fa fa-star" aria-hidden="true"></a>
+                                                                                                                </div>
+                                                </span>
+                                            </li>
+                                                                                    </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                    </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="add_attachments_html" style="display:none;">
+    <div data-behavior="pending_attachments file_drop_target" data-sortable="true" class="attachments add_attachments" id="add_attachments">
+        <span class="prompt_graphic"></span>
+        <div class="file_input_button">
+            <span data-without-features="files_api">To attach files</span>
+            <span class="file_input_container">
+                <input name="file" type="file" multiple="" onchange="$(document).trigger(&#39;ie:change&#39;, this)" tabindex="-1">
+                <a class="decorated" data-behavior="local_file_picker" href="https://datascience.foundation/sciencewhitepaper/underfitting-and-overfitting-in-machine-learning#" tabindex="-1">from your computer</a>
+            </span>
+        </div>
+        <ul class="pending_attachments ui-sortable" data-role="accept_as_input"></ul>
+    </div>
+</div>
+
+<div class="modal fade" id="noCommentAccessModal" role="dialog">
+	<div class="modal-dialog margin-pdf">
+		<!-- Modal content-->
+		<div class="modal-content pdf-margin">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">×</button>
+					<h4 class="pdf-title">Comment</h4>
+				</div>
+				<div class="modal-body">
+					<p>You cannot reply to your own comment or question. You can respond to another member's comment in this thread.</p>
+				</div>
+		</div>
+	</div>
+</div>
+
+<script>
+jQuery(document).ready(function() {
+    var canComment = 'TRUE';
+	$('#comment-form-custom').submit(function(e) {
+		if(canComment === "FALSE") {
+			$("#noCommentAccessModal").modal('show');
+			return false;
+		}
+    });
+    // start discussion
+    $('#forumthread-message').summernote({
+		height: 300,
+		disableDragAndDrop: true,
+		toolbar: [
+            ['font', ['bold', 'italic', 'underline'/*, 'clear'*/]],
+            ['para', ['ul', 'ol'/*, 'paragraph'*/]],
+				
+		],
+		callbacks: {
+			onInit: function() {
+				$(".note-group-select-from-files").remove();
+				setTimeout(function() {
+					var attachment_html = $('#add_attachments_html').html();
+					$('#add_attachments_html').remove();
+					$('.note-editing-area').append(attachment_html);
+				}, 100);
+
+			},
+			onKeydown: function (e) { 
+				var t = e.currentTarget.innerText;
+				var min = $("#forumthread-message").attr('min');
+				var max = $("#forumthread-message").attr('max');
+				if(t.length < min) {
+					var showCount = '<span style="color: red;">' + min + '</span>';
+				} else {
+					var showCount = t.length;
+				}
+				$('#forumthread-message').closest('div.topic-section').find('span.charLength').html(showCount + ' / '+ max + ' (Min. / Max. Characters)');
+
+				if (t.length >= max) {
+					//delete keys, arrow keys, copy, cut, select all
+					if (e.keyCode != 8 && !(e.keyCode >=37 && e.keyCode <=40) && e.keyCode != 46 && !(e.keyCode == 88 && e.ctrlKey) && !(e.keyCode == 67 && e.ctrlKey) && !(e.keyCode == 65 && e.ctrlKey))
+					e.preventDefault(); 
+				} 
+			},
+			onKeyup: function (e) {
+				var t = e.currentTarget.innerText;
+				var min = $("#forumthread-message").attr('min');
+				var max = $("#forumthread-message").attr('max');
+				if(t.length < min) {
+					var showCount = '<span style="color: red;">' + min + '</span>';
+				} else {
+					var showCount = t.length;
+				}
+				$('#forumthread-message').closest('div.topic-section').find('span.charLength').html(showCount + ' / '+ max + ' (Min. / Max. Characters)');
+			},
+			onPaste: function (e) {
+				var t = e.currentTarget.innerText;
+				var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+				e.preventDefault();
+				var maxPaste = bufferText.length;
+				var min = $("#forumthread-message").attr('min');
+				var max = $("#forumthread-message").attr('max');
+				if(t.length + bufferText.length > max){
+					maxPaste = max - t.length;
+				}
+				if(maxPaste > 0){
+					document.execCommand('insertText', false, bufferText.substring(0, maxPaste));
+				}
+				if(t.length < min) {
+					var showCount = '<span style="color: red;">' + min + '</span>';
+				} else {
+					var showCount = t.length;
+				}
+				$('#forumthread-message').closest('div.topic-section').find('span.charLength').html(showCount + ' / '+ max + ' (Min. / Max. Characters)');
+			},
+			onChange: function(contents, $editable) {
+				var code = $(this).summernote("code");
+				$("#forumthread-message").val(contents);
+			}
+		}
+	});
+
+    
+});
+</script>
+        
+<section id="section7" class="contacts">
+            <div class="contact-form">
+            <div class="container"> <a class="scrollup hide-scrollup-mobile" style="display: inline;" data-ol-has-click-handler=""><i class="fa fa-chevron-circle-up"></i></a>
+                <div class="row">
+                    
+                    <div class="col-md-12 big-title wow bounceIn footer animated" style="visibility: visible;">
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <h2 style="background:none; border:none">Get in touch</h2>
+                        </div>
+                        
+                        <h2 style="height:2px">&nbsp;</h2>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <form id="Subscribe" action="https://datascience.foundation/subscribefooter" method="post">
+<input type="hidden" name="_frontendCSRF" value="2G3T_Q5u6zOoRRD24k0d9y-btIGTL0hGG67unzJfxEiNP5WPRSWYRsoVcZG9ey2kbvL3xfJLJB5v55fLSyuQCg==">                    <input type="hidden" name="r" value="/subscribefooter">
+                    <fieldset>
+                        <div class="row p">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 wow fadeInLeft no-padding-mobile animated" style="visibility: visible;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <input class="form-control" id="name" name="name" type="text" placeholder="Name" maxlength="30">
+                                        <span id="subsname" class="subs-error"></span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <input class="form-control" type="email" id="email" name="email" placeholder="Email" value="" required="" onchange="return newvalidateForm1()" maxlength="100">
+                                        <span id="subsemail" class="subs-error"></span>
+                                    </div>
+                                    <div class="col-md-12 col-lg-6" id="staticParentFooter">
+                                        <input class="form-control" type="text" id="phone" name="phone" placeholder="Phone" value="" required="" maxlength="15">
+                                        <span id="subsphone" class="subs-error"></span>
+                                    </div>
+                                    <div class="col-md-12 col-lg-6 col-xs-12">
+                                        <div class="col-md-9 col-xs-9 best_time_new no-padding-left">
+                                            <input class="form-control best-time-to-call hasDatepicker" type="text" id="date1" name="time" placeholder="Best time to call" value="" required="">
+                                        </div>
+                                        <div class="col-md-3 col-xs-3 best_time_hour_new" style="padding: 0px;">
+                                            <select class="form-control" name="datetime" style="padding: 0 10px;">
+                                                <option value="8AM">8 AM</option>
+                                                <option value="9AM">9 AM</option>
+                                                <option value="10AM">10 AM</option>
+                                                <option value="11AM">11 AM</option>
+                                                <option value="12PM">12 PM</option>
+                                                <option value="1PM">1 PM</option>
+                                                <option value="2PM">2 PM</option>
+                                                <option value="3PM">3 PM</option>
+                                                <option value="4PM">4 PM</option>
+                                                <option value="5PM">5 PM</option>
+                                                <option value="6PM">6 PM</option>
+                                            </select>
+                                        </div>
+                                        <span id="subsdate" class="subs-error"></span>
+                                    </div>
+                                    <div class="col-md-12 col-lg-6 col-xs-12">
+                                            <div class="form-group field-footer-recaptcha">
+
+<input type="hidden" id="footer-recaptcha" class="form-control" name="Footer[reCaptcha]"><div id="footer-recaptcha-recaptcha-Subscribe" class="g-recaptcha" data-sitekey="6LeFtrgUAAAAAGuLSGNjqtEI1foN858_nS1ou7-J" data-input-id="footer-recaptcha" data-form-id="Subscribe"><div style="width: 304px; height: 78px;"><div><iframe title="reCAPTCHA" src="./Underfitting and Overfitting in Machine Learning_files/anchor(1).html" width="304" height="78" role="presentation" name="a-s4tt0j51chq" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox"></iframe></div><textarea id="g-recaptcha-response-1" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea></div></div>
+
+<p class="help-block help-block-error"></p>
+</div>                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 wow fadeInRight no-padding-mobile  animated" style="visibility: visible;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <textarea class="form-control" id="text" name="text" rows="3" cols="40" placeholder="Message ..." required="" maxlength="1000"></textarea>
+                                        <span id="substext" class="subs-error"></span>
+                                    </div>
+                                    <input type="hidden" name="page" value="footer">
+                                    <input type="hidden" name="url" value="http://datascience.foundation/sciencewhitepaper/underfitting-and-overfitting-in-machine-learning">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-sm-1 mt2 col-xs-1">
+                                            <input type="checkbox" name="terms" value="1" class="chk-bx">
+                                        </div>
+                                        <div class="col-sm-10 col-xs-10 clr-footer-radio">Subscribe to latest Data science Foundation news </div>
+                                        <br>
+                                        <span id="white-error" class="subs-error"></span>
+                                    </div>
+                                    
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-sm-1 mt2 col-xs-1">
+                                            <input type="checkbox" name="privacy" value="1" class="privacy-chk-bx">
+                                        </div>
+                                        <div class="col-sm-10 col-xs-10 clr-footer-radio">I have read and agree to the Data science Foundation Privacy Policy</div>
+                                        <br>
+                                        <span id="white-error1" class="subs-error"></span>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 mt20">
+                                        <input type="submit" class="btn btn-2 btn-2c" id="subscribe" value="Submit" data-ol-has-click-handler="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    </form>                </div>
+            </div>
+        </div>
+        
+    <footer class="footer-wrap text-center">
+        <div class="container">
+            <ul class="social social-icons-footer-bottom wow fadeInDown p animated" style="visibility: visible;">
+                <li class="facebook"><a href="https://www.facebook.com/DataSF/" onclick="trackOutboundLink(&#39;https://www.facebook.com/DataSF/&#39;);" data-toggle="tooltip" title="Facebook" target="blank" data-ol-has-click-handler=""><i class="fa fa-facebook"></i></a></li>
+                <li class="twitter"><a href="https://twitter.com/@DataSFoundation" onclick="trackOutboundLink(&#39;https://twitter.com/@DataSFoundation&#39;);" data-toggle="tooltip" title="Twitter" target="blank" data-ol-has-click-handler=""><i class="fa fa-twitter"></i></a></li>
+                <li class="linkedin"><a href="https://www.linkedin.com/company/data-science-foundation" onclick="trackOutboundLink(&#39;https://www.linkedin.com/company/data-science-foundation&#39;);" data-toggle="tooltip" title="Linkedin" target="blank" data-ol-has-click-handler=""><i class="fa fa-linkedin"></i></a></li>
+
+                <li class="youtube">
+                    <a href="https://www.youtube.com/channel/UCrInkBdw2sk2Jt3054pL9jg" title="YouTube" data-toggle="tooltip" target="blank" onclick="trackOutboundLink(&#39;https://www.youtube.com/channel/UCrInkBdw2sk2Jt3054pL9jg&#39;);" data-ol-has-click-handler=""><i class="fa fa-youtube"></i></a>
+                </li>
+            </ul>
+            <ul class="social social-icons-footer-bottom wow fadeInDown p pt15" style="visibility: hidden; -webkit-animation-name: none; -moz-animation-name: none; animation-name: none;">
+                <li><a href="https://datascience.foundation/" data-ol-has-click-handler="">Home</a></li>
+                <li><a href="https://datascience.foundation/information" data-ol-has-click-handler="">Information</a></li>
+                <li><a href="https://datascience.foundation/resource" data-ol-has-click-handler="">Resources</a></li>
+                <li><a href="https://datascience.foundation/membership" data-ol-has-click-handler="">Membership</a></li>
+                <li><a href="https://datascience.foundation/consultancy" data-ol-has-click-handler="">Services</a></li>
+                <li><a href="https://datascience.foundation/legal" data-ol-has-click-handler="">Legal</a></li>
+                <li><a href="https://datascience.foundation/privacy" data-ol-has-click-handler="">Privacy</a></li>
+                <li><a href="https://datascience.foundation/sitemap" data-ol-has-click-handler="">Site Map</a></li>
+                <li><a href="https://datascience.foundation/contact" data-ol-has-click-handler="">Contact</a></li>
+            </ul>
+            <p class="site-info">© 2022 Data science Foundation. All rights reserved. Data S.F. Limited 09624670</p>
+            <p class="peppersack">Site By-<span><a href="https://www.peppersack.com/" onclick="trackOutboundLink(&#39;https://www.peppersack.com/&#39;);" target="_blank" style="" data-ol-has-click-handler="">Peppersack</a></span></p>
+        </div>
+    
+                        <div class="cookie-info">
+                    <p>We use <a data-toggle="modal" data-target="#cookie_modal">cookies</a></p>
+                    <button class="cookieClose" data-ol-has-click-handler="">Accept</button>
+                </div>
+            </footer>
+</section>
+<div class="modal fade" id="cookie_modal" role="dialog" data-backdrop="false" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close modal_close_button" data-dismiss="modal" data-ol-has-click-handler="">×</button>
+                <h4 class="clr-dark">Cookie Information </h4>
+            </div>
+            <div class="modal-body">
+                <p>We are using cookies to provide statistics that help us to improve your experience of our site. You can choose to use the site without cookies. However, by continuing to use the site without changing your settings, you are agreeing to our use of cookies.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="cookieCloseBtn" data-ol-has-click-handler="">Accept</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="enquiry_form_modal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close modal_close_button" data-dismiss="modal">×</button>
+                <h3 class="pdf-title clr-dark">Contact Form </h3>
+            </div>
+            <div class="modal-body">
+                <div class="enquiry-prodigy-message no-display">
+                    <p>This member is participating in the Prodigy programme. This message will be directed to Prodigy Admin the Prodigy Programme manager. <a href="https://datascience.foundation/prodigy/find-out-more" data-ol-has-click-handler="">Find out more about Prodigy</a></p>
+                </div>
+                <form id="enquiry-form" action="https://datascience.foundation/site/submit-enquiry" method="post" enctype="multipart/form-data">
+<input type="hidden" name="_frontendCSRF" value="2G3T_Q5u6zOoRRD24k0d9y-btIGTL0hGG67unzJfxEiNP5WPRSWYRsoVcZG9ey2kbvL3xfJLJB5v55fLSyuQCg=="><div class="form-group field-enquiry-contact_id">
+
+<input type="hidden" id="enquiry-contact_id" class="contact_id" name="Enquiry[contact_id]">
+
+<p class="help-block help-block-error"></p>
+</div>                    <fieldset>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group field-enquiry-name required">
+
+<input type="text" id="enquiry-name" class="form-control" name="Enquiry[name]" placeholder="Name" aria-required="true">
+
+<p class="help-block help-block-error"></p>
+</div>                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group field-enquiry-email required">
+
+<input type="text" id="enquiry-email" class="form-control" name="Enquiry[email]" placeholder="Email" aria-required="true">
+
+<p class="help-block help-block-error"></p>
+</div>                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group field-enquiry-repeate_email required">
+
+<input type="text" id="enquiry-repeate_email" class="form-control" name="Enquiry[repeate_email]" placeholder="Email Confirmation" aria-required="true">
+
+<p class="help-block help-block-error"></p>
+</div>                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group field-enquiry-subject required">
+
+<input type="text" id="enquiry-subject" class="form-control" name="Enquiry[subject]" placeholder="Subject" aria-required="true">
+
+<p class="help-block help-block-error"></p>
+</div>                            </div>
+                            <div class="col-md-6 staticParentFooter">
+                                <div class="form-group field-enquiry-contact_no required">
+
+<input type="text" id="enquiry-contact_no" class="form-control" name="Enquiry[contact_no]" placeholder="Contact Number" aria-required="true">
+
+<p class="help-block help-block-error"></p>
+</div>                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group field-enquiry-message required">
+
+<textarea id="enquiry-message" class="form-control" name="Enquiry[message]" rows="6" placeholder="Message" aria-required="true"></textarea>
+
+<p class="help-block help-block-error"></p>
+</div>                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!-- <span id="captcha-info" class="info"></span>
+                                <div class="re">Refresh</div>
+                                <div class="rand1"></div>
+                                <div class="plus">+</div>
+                                <div class="rand2"></div>
+                                <input type="text" id="total" autocomplete="off" /> -->
+                                <div class="form-group field-enquiry-recaptcha">
+
+<input type="hidden" id="enquiry-recaptcha" class="form-control" name="Enquiry[reCaptcha]"><div id="enquiry-recaptcha-recaptcha-enquiry-form" class="g-recaptcha" data-sitekey="6LeFtrgUAAAAAGuLSGNjqtEI1foN858_nS1ou7-J" data-input-id="enquiry-recaptcha" data-form-id="enquiry-form"><div style="width: 304px; height: 78px;"><div><iframe title="reCAPTCHA" src="./Underfitting and Overfitting in Machine Learning_files/anchor(2).html" width="304" height="78" role="presentation" name="a-s3z60its2n2v" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox"></iframe></div><textarea id="g-recaptcha-response-2" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea></div></div>
+
+<p class="help-block help-block-error"></p>
+</div>                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div id="div-enquiry-policy">
+                                    <div class="form-group field-enquiry-policy">
+<div class="checkbox">
+<label for="enquiry-policy">
+<input type="hidden" name="Enquiry[policy]" value="0"><input type="checkbox" id="enquiry-policy" name="Enquiry[policy]" value="1">
+I have read and agree to the terms of the Data science Foundation Privacy Policy
+</label>
+<p class="help-block help-block-error"></p>
+
+</div>
+</div>                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 pt20">
+                                <button type="submit" id="submit_enquiry_form" class="btn btn-info" data-ol-has-click-handler="">SUBMIT</button>                            </div>
+                        </div>
+                    </fieldset>
+                </form>            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="third_time_login" class="modal modal-md fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- <div class="modal-header">
+                <button type="button" class="close third_time_login_close">&times;</button>
+                <h4 class="modal-title"><b>Add a Personal Profile Page</b></h4>
+            </div> -->
+            <div class="modal-body">
+            <button type="button" class="close third_time_login_close modal_close_button" data-ol-has-click-handler="">×</button>
+				<p><b>Complete your membership listing and tell others about your interests, experience and qualifications with a Personal Profile page.</b></p>
+            </div>
+            <div class="modal-footer">
+				<a href="https://datascience.foundation/details/view/apply-personal-profile" type="button" class="btn btn-primary float-right" style="float:right;" data-ol-has-click-handler="">Add a Personal Profile</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="second_time_login" class="modal modal-md fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- <div class="modal-header">
+                <button type="button" class="close second_time_login_close">&times;</button>
+                <h4 class="modal-title"><b>Add a Personal Profile Page</b></h4>
+            </div> -->
+            <div class="modal-body">
+                <button type="button" class="close second_time_login_close modal_close_button" data-ol-has-click-handler="">×</button>
+                <p><b>Your Personal Profile page is missing information about your experience and qualifications that other members would find interesting. <a href="https://datascience.foundation/details/view/apply-personal-profile" style="text-decoration: underline;" onmouseover="this.style.textDecoration=&#39;none&#39;" onmouseout="this.style.textDecoration=&quot;underline&quot;" data-ol-has-click-handler="">Click here to update</a>.</b></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="guest_user_information_popup" class="modal modal-md fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close guest_user_information_popup_close modal_close_button " data-ol-has-click-handler="">×</button>
+                <h4 class="modal-title"><b><a href="https://datascience.foundation/login" data-ol-has-click-handler="">Login</a> / <a href="https://datascience.foundation/joinus" data-ol-has-click-handler="">Join Us</a></b></h4>
+            </div>
+            <div class="modal-body">
+                <!-- <p><b>Please login to your DSF account for access to member only information and services. If you are not a member but have an interest in Data science, machine learning and AI, join us today.</b></p> -->
+                <p><b>Login to your membership account to view your personalised news feed, update your profile, manage your preferences. publish articles and to create a following.<br><br>If you are not a member but work with or have an interest in Data Science, Machine Learning and Artificial Intelligence, <a href="https://datascience.foundation/joinus" style="color: #337ab7;" data-ol-has-click-handler="">join us today</a>.</b></p>
+            </div>
+            <div class="modal-footer">
+				<a href="https://datascience.foundation/login" data-ol-has-click-handler="">Login</a> |
+				<a href="https://datascience.foundation/joinus" data-ol-has-click-handler="">Join Us</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="donate_alert_after_login" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close donate_alert_after_login_close modal_close_button" data-ol-has-click-handler="">×</button>
+                <h4 class="modal-title"><b>Support the work of the Data Science Foundation</b></h4>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" value="false" name="with_donation" id="with_donation">
+                <p>Help to fund our work and enable us to provide free communications and knowledge sharing services to members across the globe.</p>
+                <p><a href="javascript:void(0);" class="donate_link_login" style="color: #23527c;">Click here</a> to set-up a donation of £30 per year</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-addmore btn-lg float-right donate_link_login" style="border-radius: 50px; text-transform: none;">Donate</button>
+                <button type="button" class="btn btn-primary float-right donate_alert_after_login_close" style="float:right;" data-ol-has-click-handler="">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Scroll To Top -->
+<a href="https://datascience.foundation/sciencewhitepaper/underfitting-and-overfitting-in-machine-learning#" class="scrollup hide-scrollup-mobile" style="display: inline;" data-ol-has-click-handler=""><i class="fa fa-angle-up"></i></a>
+</div>
+<!-- /Warpper -->
+<iframe src="./Underfitting and Overfitting in Machine Learning_files/portal.html" id="st_gdpr_iframe" title="GDPR Consent Management" style="width: 0px; height: 0px; position: absolute; left: -5000px;"></iframe><script src="./Underfitting and Overfitting in Machine Learning_files/custom_validation.min.js.download" type="text/javascript"></script>
+<script>
+$(document).ready(function() {
+    var is_third_time_login = '';
+    var is_second_time_login = '';
+    var is_guest_user_information = '';
+    var is_donate_alert_after_login = '';
+    
+    if(is_third_time_login != '' && is_second_time_login == '') {
+		$('#third_time_login').modal('show');
+    }
+    if(is_second_time_login != '' && is_third_time_login == '') {
+        $('#second_time_login').modal('show');
+    }
+    if(is_guest_user_information != '') {
+        $('#guest_user_information_popup').modal('show');
+        $('.guest_user_information_popup_close').click(function() {
+            $('#guest_user_information_popup').modal('hide');
+        });
+    }
+    $('.report_a_fault_modal_close').click(function() {
+        $('#report_a_fault_modal').modal('hide');
+    });
+
+    $("#report_fault_form").on("afterValidate", function (event, messages) {
+        if (!form_valid('#report_fault_form')) {
+            return false;
+        }
+        return true;
+    });
+    if(is_donate_alert_after_login != '' && is_third_time_login == '' && is_second_time_login == '') {
+        $('#donate_alert_after_login').modal('show');
+    }
+    $('.donate_alert_after_login_close').click(function() {
+        $('#donate_alert_after_login').modal('hide');
+    });
+
+    $(document).on('submit', '#report_fault_form', function() {
+        if(!form_valid('#report_fault_form')) {
+            return false;
+        } else {
+            return true;
+        }
+    });
+    $('#report_form_v_attached_file').on('change', function() {
+        var fileSize = this.files[0].size / 1024 ;
+        var fileValue = $(this).val();
+        var fileExtension = $(this).val().split('.').pop().toLowerCase();
+        if($.inArray(fileExtension, ['gif','png','jpg','jpeg','doc','docx','pdf']) == -1) {
+            $('#report_fault_attachment_error').hide();
+            
+            $(this).val('');
+            $(this).after('<span style="color:red" class=#report_fault_attachment_error">Invalid file format! File format must be DOC, DOCX, PDF, JPG, JPEG, PNG or GIF.<br></span>');
+        } else if(fileSize > (1024*8) ) {
+            $('#report_fault_attachment_error').hide();
+            
+            $(this).val('');
+            $(this).after('<span style="color:red" class=#report_fault_attachment_error">Maximum file size limit is 8MB.</span>').slideDown('slow');
+            return false;
+        } else {
+            $('#report_fault_attachment_error').hide();
+        }
+    });
+
+    $(document).on('keyup blur', '#report_fault_form input', function() {
+        $('#report_fault_form input').each(function(k, v) {
+            if($(this).val() != '') {
+                console.log($(this).next());
+                $(this).nextAll('div:first').css('opacity', '0');
+            } else {
+                $(this).nextAll('div:first').css('opacity', '1');
+            }
+        });
+    });
+    // $('#guest_user_information_popup').modal('show');
+});
+</script>
+
+
+<!-----  Follow Auther popup for Non DSF member  ------>
+<div class="modal fade" id="follow_author_non_member" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <form id="follow_author_non_member_form" action="https://datascience.foundation/sciencewhitepaper/underfitting-and-overfitting-in-machine-learning" method="post">
+<input type="hidden" name="_frontendCSRF" value="2G3T_Q5u6zOoRRD24k0d9y-btIGTL0hGG67unzJfxEiNP5WPRSWYRsoVcZG9ey2kbvL3xfJLJB5v55fLSyuQCg==">
+            <input type="hidden" id="follow_author_non_member_author_id" class="" name="author_id">
+            <input type="hidden" id="follow_author_non_member_author_type" class="" name="author_type">
+                <div class="modal-header">
+                    <button type="button" class="close modal_close_button" data-dismiss="modal">×</button>
+                    <h4 class="title">Follow </h4>
+                </div>
+                <div class="modal-body">                
+                    <div class="screen-reader-2">
+                        <div class="input-group-new">
+                            <div class="form-group">
+                                <input type="text" id="follow_author_non_member_firstname" class="form-control-wrpper form-control required" name="AuthorFollowers[v_firstname]" placeholder="First Name">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="screen-reader-2">
+                        <div class="input-group-new">
+                            <div class="form-group">
+                                <input type="text" id="follow_author_non_member_lastname" class="form-control-wrpper form-control required" name="AuthorFollowers[v_lastname]" placeholder="Last Name">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="screen-reader-2">
+                        <div class="input-group-new">
+                            <div class="form-group">
+                                <input type="text" id="follow_author_non_member_email" class="form-control-wrpper form-control required email" name="AuthorFollowers[v_email]" placeholder="Email">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="screen-reader-2">
+                        <div class="input-group-new">
+                            <div class="form-group">
+                                <div class="form-group field-authorfollowers-recaptcha">
+
+<input type="hidden" id="authorfollowers-recaptcha" class="form-control" name="AuthorFollowers[reCaptcha]"><div id="authorfollowers-recaptcha-recaptcha-follow_author_non_member_form" class="g-recaptcha" data-sitekey="6LeFtrgUAAAAAGuLSGNjqtEI1foN858_nS1ou7-J" data-input-id="authorfollowers-recaptcha" data-form-id="follow_author_non_member_form"><div style="width: 304px; height: 78px;"><div><iframe title="reCAPTCHA" src="./Underfitting and Overfitting in Machine Learning_files/anchor(3).html" width="304" height="78" role="presentation" name="a-a6agusrl2a7k" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox"></iframe></div><textarea id="g-recaptcha-response-3" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea></div><iframe style="display: none;" src="./Underfitting and Overfitting in Machine Learning_files/saved_resource.html"></iframe></div>
+
+<p class="help-block help-block-error"></p>
+</div>                            </div>
+                        </div>
+                    </div>
+                    <div class="screen-reader-2">
+                        <div class="input-group-new">
+                            <div class="form-group">
+                                <div class="form-group field-authorfollowers-privacypolicy">
+<div class="checkbox">
+<label for="authorfollowers-privacypolicy">
+<input type="hidden" name="AuthorFollowers[privacyPolicy]" value="0"><input type="checkbox" id="authorfollowers-privacypolicy" name="AuthorFollowers[privacyPolicy]" value="1">
+I have read and agree to the terms of the Data science Foundation Privacy Policy
+</label>
+<p class="help-block help-block-error"></p>
+
+</div>
+</div>                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info">Submit</button>
+                </div>
+            </form>        </div>
+    </div>
+</div>
+
+<div class="modal-open">
+<div id="follow_subscribe_dsf_member_popup" class="modal modal-md fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close guest_user_information_popup_close modal_close_button" data-ol-has-click-handler="">×</button>
+                <h4 class="modal-title"><b>Login</b></h4>
+            </div>
+            <div class="modal-body">
+                <p><b>Login to follow this member</b></p>
+            </div>
+            <div class="modal-footer">
+                <a href="https://datascience.foundation/sciencewhitepaper/underfitting-and-overfitting-in-machine-learning" class="login_url btn-link">Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.guest_user_information_popup_close').click(function() {
+                $('#follow_subscribe_dsf_member_popup').modal('hide');
+        });
+        
+        $("#follow_author_non_member_form").on("afterValidate", function (event, messages) {
+            if (!form_valid('#follow_author_non_member_form')) {
+                return false;
+            }
+            return true;
+        });
+    });
+
+
+</script>
+<!----- end Follow Auther popup for Non DSF member ------>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(document).on('click', '.redirect-url', function(e){
+            //alert($(this).attr('redirect-url'));
+            $.ajax({
+                type: 'GET',
+                data: {'url' : $(this).attr('redirect-url')},
+                url: SITE_URL + 'information/set-return-url',
+                dataType: 'json',
+            });
+        });
+
+        var dateToday = new Date(); 
+        $( ".event_time_picker" ).datetimepicker({
+            format: 'dd-mm-yyyy hh:ii',
+            startDate: dateToday,
+        });
+
+        var loadedElements = 1;
+        $('img.lazy').lazy();
+
+        $('.logo-background-lazy').css('background-image', 'url('+ SITE_URL +'img/slider/bx1.jpg)');
+        $('<style>.latest-datatalk:before{background:  url('+ SITE_URL +'img/section-bg.jpg)}</style>').appendTo('head');
+        $('.info-wrap').css('background', 'rgba(0,0,0,0) url('+ SITE_URL +'img/information-bg.jpg) repeat scroll center top/cover');
+        $('.about-wrap').css('background', 'rgba(0,0,0,0) url('+ SITE_URL +'img/big-data.jpg) repeat scroll center top/cover');
+
+    });
+</script>
+    <script src="./Underfitting and Overfitting in Machine Learning_files/api.js.download" async="" defer=""></script>
+<script src="./Underfitting and Overfitting in Machine Learning_files/yii.js.download"></script>
+<script src="./Underfitting and Overfitting in Machine Learning_files/yii.validation.js.download"></script>
+<script src="./Underfitting and Overfitting in Machine Learning_files/yii.activeForm.js.download"></script>
+<script src="./Underfitting and Overfitting in Machine Learning_files/bootstrap.js.download"></script>
+<script src="./Underfitting and Overfitting in Machine Learning_files/jquery.mCustomScrollbar.min.js.download"></script>
+<script src="./Underfitting and Overfitting in Machine Learning_files/jquery.lazy.min.js.download"></script>
+<script src="./Underfitting and Overfitting in Machine Learning_files/app-asset-minified-js.min.js.download"></script>
+<script src="./Underfitting and Overfitting in Machine Learning_files/jquery.fancybox.min.js.download"></script>
+<script src="./Underfitting and Overfitting in Machine Learning_files/custom_script.min.js.download"></script>
+<script>function recaptchaOnloadCallback() {
+    "use strict";
+    jQuery(".g-recaptcha").each(function () {
+        const reCaptcha = jQuery(this);
+        if (reCaptcha.data("recaptcha-client-id") === undefined) {
+            const recaptchaClientId = grecaptcha.render(reCaptcha.attr("id"), {
+                "callback": function (response) {
+                    if (reCaptcha.data("form-id") !== "") {
+                        jQuery("#" + reCaptcha.data("input-id"), "#" + reCaptcha.data("form-id")).val(response)
+                            .trigger("change");
+                    } else {
+                        jQuery("#" + reCaptcha.data("input-id")).val(response).trigger("change");
+                    }
+
+                    if (reCaptcha.attr("data-callback")) {
+                        eval("(" + reCaptcha.attr("data-callback") + ")(response)");
+                    }
+                },
+                "expired-callback": function () {
+                    if (reCaptcha.data("form-id") !== "") {
+                        jQuery("#" + reCaptcha.data("input-id"), "#" + reCaptcha.data("form-id")).val("");
+                    } else {
+                        jQuery("#" + reCaptcha.data("input-id")).val("");
+                    }
+
+                    if (reCaptcha.attr("data-expired-callback")) {
+                        eval("(" + reCaptcha.attr("data-expired-callback") + ")()");
+                    }
+                },
+            });
+            reCaptcha.data("recaptcha-client-id", recaptchaClientId);
+        }
+    });
+}</script>
+<script>jQuery(function ($) {
+jQuery('#w0').yiiActiveForm([{"id":"sendpdf-fromname","name":"fromname","container":".field-sendpdf-fromname","input":"#sendpdf-fromname","error":".help-block.help-block-error","validate":function (attribute, value, messages, deferred, $form) {yii.validation.required(value, messages, {"message":"From name cannot be blank."});yii.validation.string(value, messages, {"message":"From name must be a string.","skipOnEmpty":1});}},{"id":"sendpdf-fromemail","name":"fromemail","container":".field-sendpdf-fromemail","input":"#sendpdf-fromemail","error":".help-block.help-block-error","validate":function (attribute, value, messages, deferred, $form) {yii.validation.required(value, messages, {"message":"From email cannot be blank."});yii.validation.email(value, messages, {"pattern":/^[a-zA-Z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/,"fullPattern":/^[^@]*<[a-zA-Z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?>$/,"allowName":false,"message":"From email is not a valid email address.","enableIDN":false,"skipOnEmpty":1});}},{"id":"sendpdf-toname","name":"toname","container":".field-sendpdf-toname","input":"#sendpdf-toname","error":".help-block.help-block-error","validate":function (attribute, value, messages, deferred, $form) {yii.validation.required(value, messages, {"message":"To name cannot be blank."});yii.validation.string(value, messages, {"message":"To name must be a string.","skipOnEmpty":1});}},{"id":"sendpdf-toemail","name":"toemail","container":".field-sendpdf-toemail","input":"#sendpdf-toemail","error":".help-block.help-block-error","validate":function (attribute, value, messages, deferred, $form) {yii.validation.required(value, messages, {"message":"To email cannot be blank."});yii.validation.email(value, messages, {"pattern":/^[a-zA-Z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/,"fullPattern":/^[^@]*<[a-zA-Z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?>$/,"allowName":false,"message":"To email is not a valid email address.","enableIDN":false,"skipOnEmpty":1});}},{"id":"sendpdf-recaptcha","name":"reCaptcha","container":".field-sendpdf-recaptcha","input":"#sendpdf-recaptcha","error":".help-block.help-block-error","validate":function (attribute, value, messages, deferred, $form) {if (!value) {
+     messages.push("Re Captcha cannot be blank.");
+}}},{"id":"sendpdf-pdfid","name":"pdfid","container":".field-sendpdf-pdfid","input":"#sendpdf-pdfid","error":".help-block.help-block-error","validate":function (attribute, value, messages, deferred, $form) {yii.validation.required(value, messages, {"message":"Pdfid cannot be blank."});}}], []);
+jQuery('#Subscribe').yiiActiveForm([{"id":"footer-recaptcha","name":"reCaptcha","container":".field-footer-recaptcha","input":"#footer-recaptcha","error":".help-block.help-block-error","validate":function (attribute, value, messages, deferred, $form) {if (!value) {
+     messages.push("Re Captcha cannot be blank.");
+}}}], []);
+jQuery('#enquiry-form').yiiActiveForm([{"id":"enquiry-contact_id","name":"contact_id","container":".field-enquiry-contact_id","input":"#enquiry-contact_id","error":".help-block.help-block-error","validate":function (attribute, value, messages, deferred, $form) {yii.validation.number(value, messages, {"pattern":/^\s*[+-]?\d+\s*$/,"message":"Contact Id must be an integer.","skipOnEmpty":1});}},{"id":"enquiry-name","name":"name","container":".field-enquiry-name","input":"#enquiry-name","error":".help-block.help-block-error","validate":function (attribute, value, messages, deferred, $form) {yii.validation.required(value, messages, {"message":"Name cannot be blank."});}},{"id":"enquiry-email","name":"email","container":".field-enquiry-email","input":"#enquiry-email","error":".help-block.help-block-error","validate":function (attribute, value, messages, deferred, $form) {yii.validation.required(value, messages, {"message":"Email cannot be blank."});yii.validation.email(value, messages, {"pattern":/^[a-zA-Z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/,"fullPattern":/^[^@]*<[a-zA-Z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?>$/,"allowName":false,"message":"Email is not a valid email address.","enableIDN":false,"skipOnEmpty":1});}},{"id":"enquiry-repeate_email","name":"repeate_email","container":".field-enquiry-repeate_email","input":"#enquiry-repeate_email","error":".help-block.help-block-error","validate":function (attribute, value, messages, deferred, $form) {yii.validation.required(value, messages, {"message":"Email Confirmation cannot be blank."});yii.validation.compare(value, messages, {"operator":"==","type":"string","compareAttribute":"enquiry-email","compareAttributeName":"Enquiry[email]","skipOnEmpty":1,"message":"Email Mismatch."}, $form);}},{"id":"enquiry-subject","name":"subject","container":".field-enquiry-subject","input":"#enquiry-subject","error":".help-block.help-block-error","validate":function (attribute, value, messages, deferred, $form) {yii.validation.required(value, messages, {"message":"Subject cannot be blank."});yii.validation.string(value, messages, {"message":"Subject must be a string.","skipOnEmpty":1});}},{"id":"enquiry-contact_no","name":"contact_no","container":".field-enquiry-contact_no","input":"#enquiry-contact_no","error":".help-block.help-block-error","validate":function (attribute, value, messages, deferred, $form) {yii.validation.required(value, messages, {"message":"Contact No cannot be blank."});yii.validation.number(value, messages, {"pattern":/^\s*[+-]?\d+\s*$/,"message":"Contact No must be an integer.","skipOnEmpty":1});}},{"id":"enquiry-message","name":"message","container":".field-enquiry-message","input":"#enquiry-message","error":".help-block.help-block-error","validate":function (attribute, value, messages, deferred, $form) {yii.validation.required(value, messages, {"message":"Message cannot be blank."});yii.validation.string(value, messages, {"message":"Message must be a string.","skipOnEmpty":1});}},{"id":"enquiry-recaptcha","name":"reCaptcha","container":".field-enquiry-recaptcha","input":"#enquiry-recaptcha","error":".help-block.help-block-error","validate":function (attribute, value, messages, deferred, $form) {if (!value) {
+     messages.push("Re Captcha cannot be blank.");
+}}},{"id":"enquiry-policy","name":"policy","container":".field-enquiry-policy","input":"#enquiry-policy","error":".help-block.help-block-error","validate":function (attribute, value, messages, deferred, $form) {yii.validation.compare(value, messages, {"operator":"==","type":"string","compareValue":true,"skipOnEmpty":1,"message":"Please read and agree to the Privacy Policy."}, $form);}}], []);
+jQuery('#follow_author_non_member_form').yiiActiveForm([{"id":"authorfollowers-recaptcha","name":"reCaptcha","container":".field-authorfollowers-recaptcha","input":"#authorfollowers-recaptcha","error":".help-block.help-block-error","validate":function (attribute, value, messages, deferred, $form) {if (!value) {
+     messages.push("Re Captcha cannot be blank.");
+}}},{"id":"authorfollowers-privacypolicy","name":"privacyPolicy","container":".field-authorfollowers-privacypolicy","input":"#authorfollowers-privacypolicy","error":".help-block.help-block-error","validate":function (attribute, value, messages, deferred, $form) {yii.validation.compare(value, messages, {"operator":"==","type":"string","compareValue":true,"skipOnEmpty":1,"message":"Please read and agree to the Privacy Policy."}, $form);}}], []);
+});</script>
+
+<div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div><div style="background-color: rgb(255, 255, 255); border: 1px solid rgb(204, 204, 204); box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 3px; position: absolute; transition: visibility 0s linear 0.3s, opacity 0.3s linear 0s; opacity: 0; visibility: hidden; z-index: 2000000000; left: 0px; top: -10000px;"><div style="width: 100%; height: 100%; position: fixed; top: 0px; left: 0px; z-index: 2000000000; background-color: rgb(255, 255, 255); opacity: 0.05;" data-ol-has-click-handler=""></div><div class="g-recaptcha-bubble-arrow" style="border: 11px solid transparent; width: 0px; height: 0px; position: absolute; pointer-events: none; margin-top: -11px; z-index: 2000000000;"></div><div class="g-recaptcha-bubble-arrow" style="border: 10px solid transparent; width: 0px; height: 0px; position: absolute; pointer-events: none; margin-top: -10px; z-index: 2000000000;"></div><div style="z-index: 2000000000; position: relative;"><iframe title="recaptcha challenge expires in two minutes" src="./Underfitting and Overfitting in Machine Learning_files/bframe.html" name="c-7cm6rwstkfx4" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox" style="width: 100%; height: 100%;"></iframe></div></div><div style="background-color: rgb(255, 255, 255); border: 1px solid rgb(204, 204, 204); box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 3px; position: absolute; transition: visibility 0s linear 0.3s, opacity 0.3s linear 0s; opacity: 0; visibility: hidden; z-index: 2000000000; left: 0px; top: -10000px;"><div style="width: 100%; height: 100%; position: fixed; top: 0px; left: 0px; z-index: 2000000000; background-color: rgb(255, 255, 255); opacity: 0.05;" data-ol-has-click-handler=""></div><div class="g-recaptcha-bubble-arrow" style="border: 11px solid transparent; width: 0px; height: 0px; position: absolute; pointer-events: none; margin-top: -11px; z-index: 2000000000;"></div><div class="g-recaptcha-bubble-arrow" style="border: 10px solid transparent; width: 0px; height: 0px; position: absolute; pointer-events: none; margin-top: -10px; z-index: 2000000000;"></div><div style="z-index: 2000000000; position: relative;"><iframe title="recaptcha challenge expires in two minutes" src="./Underfitting and Overfitting in Machine Learning_files/bframe(1).html" name="c-s4tt0j51chq" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox" style="width: 100%; height: 100%;"></iframe></div></div><div style="background-color: rgb(255, 255, 255); border: 1px solid rgb(204, 204, 204); box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 3px; position: absolute; transition: visibility 0s linear 0.3s, opacity 0.3s linear 0s; opacity: 0; visibility: hidden; z-index: 2000000000; left: 0px; top: -10000px;"><div style="width: 100%; height: 100%; position: fixed; top: 0px; left: 0px; z-index: 2000000000; background-color: rgb(255, 255, 255); opacity: 0.05;" data-ol-has-click-handler=""></div><div class="g-recaptcha-bubble-arrow" style="border: 11px solid transparent; width: 0px; height: 0px; position: absolute; pointer-events: none; margin-top: -11px; z-index: 2000000000;"></div><div class="g-recaptcha-bubble-arrow" style="border: 10px solid transparent; width: 0px; height: 0px; position: absolute; pointer-events: none; margin-top: -10px; z-index: 2000000000;"></div><div style="z-index: 2000000000; position: relative;"><iframe title="recaptcha challenge expires in two minutes" src="./Underfitting and Overfitting in Machine Learning_files/bframe(2).html" name="c-s3z60its2n2v" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox" style="width: 100%; height: 100%;"></iframe></div></div><div style="background-color: rgb(255, 255, 255); border: 1px solid rgb(204, 204, 204); box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 3px; position: absolute; transition: visibility 0s linear 0.3s, opacity 0.3s linear 0s; opacity: 0; visibility: hidden; z-index: 2000000000; left: 0px; top: -10000px;"><div style="width: 100%; height: 100%; position: fixed; top: 0px; left: 0px; z-index: 2000000000; background-color: rgb(255, 255, 255); opacity: 0.05;" data-ol-has-click-handler=""></div><div class="g-recaptcha-bubble-arrow" style="border: 11px solid transparent; width: 0px; height: 0px; position: absolute; pointer-events: none; margin-top: -11px; z-index: 2000000000;"></div><div class="g-recaptcha-bubble-arrow" style="border: 10px solid transparent; width: 0px; height: 0px; position: absolute; pointer-events: none; margin-top: -10px; z-index: 2000000000;"></div><div style="z-index: 2000000000; position: relative;"><iframe title="recaptcha challenge expires in two minutes" src="./Underfitting and Overfitting in Machine Learning_files/bframe(3).html" name="c-a6agusrl2a7k" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox" style="width: 100%; height: 100%;"></iframe></div></div></body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>
