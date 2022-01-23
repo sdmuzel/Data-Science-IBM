@@ -107,6 +107,14 @@ Upon successfully completing these courses, you will have built a portfolio of d
 
 ![modulo5](https://user-images.githubusercontent.com/71708626/147712170-925f7440-4fac-4f83-9fde-b501b9f3abbd.png)
 
+![modulo6](https://user-images.githubusercontent.com/71708626/150695758-c8d367eb-3699-41ab-945a-16a5c1895cff.png)
+
+![modulo7](https://user-images.githubusercontent.com/71708626/150695708-547ae061-8de7-43d5-a26a-a0ddffecf4ec.png)
+
+![modulo8](https://user-images.githubusercontent.com/71708626/150695825-3788b286-7c1c-4948-b885-c3c339ca0b49.png)
+
+
+
 
 
 
